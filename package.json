@@ -4,6 +4,11 @@
     "description": "Underlined matching brackets for VSCode",
     "version": "0.0.1",
     "publisher": "rafamel",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/rafamel/subtle-brackets.git"
+	},
+	"license": "SEE LICENSE IN LICENSE",
     "engines": {
         "vscode": "^1.12.0"
     },
