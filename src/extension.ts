@@ -13,7 +13,7 @@ export function activate(context: ExtensionContext) {
     
     let bracketParser = new BracketParser();
     let controller = new BracketParserController(bracketParser);
-
+    
     // Add to a list of disposables which are disposed when this extension is deactivated.
     context.subscriptions.push(controller);
     context.subscriptions.push(bracketParser);
@@ -65,9 +65,9 @@ class BracketParser {
 
             let line = selection.start.line,
                 startChar = selection.start.character,
-                prevChar = Math.max(0,startChar-1),
-                postChar = startChar+1,
-                lineText = doc.lineAt(line).text;
+                lineText = doc.lineAt(line).text,
+                prevChar = Math.max(startChar-1, 0),
+                postChar = Math.min(startChar+1, lineText.length);
 
             // These are the left and right characters to the cursor
             let left = lineText.slice(prevChar, startChar),
@@ -78,11 +78,11 @@ class BracketParser {
             let aBracket: string,
                 startPosChar: number,
                 endPosChar: number;
-            if (this.bracketsDict.all.indexOf(right) !== -1) {
+            if (right && this.bracketsDict.all.indexOf(right) !== -1) {
                 aBracket = right;
                 startPosChar = startChar;
                 endPosChar = postChar;
-            } else if (this.bracketsDict.all.indexOf(left) !== -1) {
+            } else if (left && this.bracketsDict.all.indexOf(left) !== -1) {
                 aBracket = left;
                 startPosChar = prevChar;
                 endPosChar = startChar;

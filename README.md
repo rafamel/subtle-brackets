@@ -18,10 +18,11 @@ The difference with the default boxes should be clear:
 
 Reload the window after changing your settings by pressing `ctrl(⌘) + r`. 
 
-* `subtleBrackets.bracketPairs`: An array of the bracket pairs to match. There must be two characters per string. Default: `["{}", "[]", "()"]`.
-* `subtleBrackets.style`: Change the style of matching brackets. Default is light/dark underline (depending on the theme): `{ "borderWidth": "1px", "borderStyle": "none none solid none" }`. For a list of allowed keys check [DecorationRenderOptions](https://code.visualstudio.com/docs/extensionAPI/vscode-api#DecorationRenderOptions). Some alternative examples:
-    - 2px Blue underline: `{ "borderColor": "blue", "borderWidth": "2px" }`
-    - White font over red background: `{ "color": "white", "backgroundColor": "red", "borderStyle": "none" }`
+* **subtleBrackets.bracketPairs**: An array of the bracket pairs to match. There must be two characters per string. Default: `["{}", "[]", "()"]`.
+
+* **subtleBrackets.style**: Change the style of matching brackets. Default is light/dark underline (depending on the theme): `{ "borderWidth": "1px", "borderStyle": "none none solid none" }`. For a list of allowed keys check [DecorationRenderOptions](https://code.visualstudio.com/docs/extensionAPI/vscode-api#DecorationRenderOptions). Some alternative examples:
+    - *2px Blue underline:* `{ "borderColor": "blue", "borderWidth": "2px" }`
+    - *White font over red background:* `{ "color": "white", "backgroundColor": "red", "borderStyle": "none" }`
 
 ## How to disable matchBrackets
 
@@ -30,12 +31,6 @@ Reload the window after changing your settings by pressing `ctrl(⌘) + r`.
 - Manually add `"editor.matchBrackets": false` to the settings **or** press `ctrl(⌘) + f`, type `editor.matchBrackets` to locate the field, and set it to `false`.
 
 ![Settings](https://raw.githubusercontent.com/rafamel/subtle-brackets/master/images/settings.png)
-
-## Release Notes
-
-### 1.0.0
-
-Initial release of Subtle Brackets
 
 
 **Enjoy!**
