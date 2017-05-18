@@ -1,7 +1,5 @@
 # Change Log
-All notable changes to the "subtle-brackets" extension will be documented in this file.
+All notable changes to the *Subtle Brackets* extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
+## [1.0.0] 2017-05-18
 - Initial release

@@ -2,7 +2,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 // import * as vscode from 'vscode';
-import {window, commands, Disposable, ExtensionContext, TextDocument, Range, Position, TextEditorDecorationType} from 'vscode';
+import { workspace, window, commands, Disposable, ExtensionContext, TextDocument, Range, Position, TextEditorDecorationType } from 'vscode';
 
 // This method is called when your extension is activated. Activation is
 // controlled by the activation events defined in package.json.
@@ -10,9 +10,8 @@ export function activate(context: ExtensionContext) {
     // Use the console to output diagnostic information (console.log) and errors (console.error).
     // This line of code will only be executed once when your extension is activated.
     console.log('Subtle Brackets is now active!');
-
-    // create a new word counter
-    let bracketParser = new BracketParser(['{}', '[]', '()']);
+    
+    let bracketParser = new BracketParser();
     let controller = new BracketParserController(bracketParser);
 
     // Add to a list of disposables which are disposed when this extension is deactivated.
@@ -27,18 +26,22 @@ class BracketParser {
     private decoration: TextEditorDecorationType;
     private past: boolean;
 
-    constructor(brackets) {
-        this.past = false;
-        this.decoration = window.createTextEditorDecorationType({ borderWidth: '1px', borderStyle: 'none none solid none' });
+    constructor() {
 
+        let config = workspace.getConfiguration('subtleBrackets');
+        this.decoration = window.createTextEditorDecorationType(config.style);
+        this.past = false;
         this.bracketsDict = {'all': [], 'open': [], 'close': [], 'pairs': {}};
-        brackets.forEach(x => {
-            let split = x.split('');
-            this.bracketsDict['all'].push(split[0], split[1]);
-            this.bracketsDict['open'].push(split[0]);
-            this.bracketsDict['close'].push(split[1]);
-            this.bracketsDict['pairs'][split[0]] = split[1];
-            this.bracketsDict['pairs'][split[1]] = split[0];
+
+        config.bracketPairs.forEach(x => {
+            if (x.length === 2) { // Safety Check
+                let split = x.split('');
+                this.bracketsDict['all'].push(split[0], split[1]);
+                this.bracketsDict['open'].push(split[0]);
+                this.bracketsDict['close'].push(split[1]);
+                this.bracketsDict['pairs'][split[0]] = split[1];
+                this.bracketsDict['pairs'][split[1]] = split[0];
+            }
         });
     }
 
@@ -115,8 +118,6 @@ class BracketParser {
 
                 // Now we have `aBracketRange` and `bBracketRange`
                 let bBracketRange = new Range(new Position(bLine, bChar), new Position(bLine, bChar+1));
-                console.log(bLine, bChar);
-                console.log(doc.getText(bBracketRange));
 
                 this.past = true;
                 editor.setDecorations(this.decoration, [bBracketRange, aBracketRange]);
@@ -161,15 +162,15 @@ class BracketParserController {
         this._bracketParser = bracketParser;
         this._bracketParser.findBrackets();
 
-        // subscribe to selection change and editor activation events
+        // Subscribe to selection change and editor activation events
         let subscriptions: Disposable[] = [];
         window.onDidChangeTextEditorSelection(this._onEvent, this, subscriptions);
         window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
 
-        // update the counter for the current file
+        // Update
         this._bracketParser.findBrackets();
 
-        // create a combined disposable from both event subscriptions
+        // Create a combined disposable from both event subscriptions
         this._disposable = Disposable.from(...subscriptions);
     }
 

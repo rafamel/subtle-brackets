@@ -1,9 +1,10 @@
 {
     "name": "subtle-brackets",
-    "displayName": "Subtle Brackets",
-    "description": "Underlined matching brackets for VSCode",
-    "version": "0.0.1",
+    "displayName": "Subtle Matching Brackets",
+    "description": "Underlined matching brackets and more",
+    "version": "1.0.0",
     "publisher": "rafamel",
+    "icon": "images/icon.png",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/rafamel/subtle-brackets"
@@ -18,13 +19,33 @@
     "categories": [
         "Other"
     ],
-    "keywords": ["bracket", "brackets", "matching", "style"],
     "activationEvents": [
         "*"
     ],
     "main": "./out/src/extension",
     "contributes": {
-        "commands": []
+        "configurationDefaults": {
+            "editor.matchBrackets": false
+        },
+        "configuration": {
+            "type": "object",
+            "title": "Suble Brackets",
+            "properties": {
+                "subtleBrackets.bracketPairs": {
+                    "type": "string[]",
+                    "default": ["{}", "[]", "()"],
+                    "description": "Pairs of matching brackets"
+                },
+                "subtleBrackets.style": {
+                    "type": "object",
+                    "default": { 
+                        "borderWidth": "1px",
+                        "borderStyle": "none none solid none" 
+                    },
+                    "description": "Custom style for matching brackets"
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",
