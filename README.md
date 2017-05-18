@@ -1,22 +1,18 @@
 # Subtle Brackets
 
-Allows styling of matching brackets as the native VSCode [box around them](https://github.com/Microsoft/vscode/issues/23606) [impairs visibility](https://github.com/Microsoft/vscode/issues/12402).
+Subtle Brackets allows custom styling of matching brackets as the native VSCode [box around them](https://github.com/Microsoft/vscode/issues/23606) [impairs visibility](https://github.com/Microsoft/vscode/issues/12402). By default, it applies a subtle underline light/dark underline to the bracket next to the cursor and its matching pair.
 
-It does its own parsing, so you'll need to deactivate `matchingBrackets` by adding `"editor.matchBrackets": false,` to your `settings.json`.
+The difference with the default boxes should be clear:
 
-## Features
+![After](https://raw.githubusercontent.com/rafamel/subtle-brackets/master/images/after.png)
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## How to disable matchBrackets
 
-For example if there is an image subfolder under your extension project workspace:
+Subtle Brackets does its own parsing, so you'll need to deactivate the native `matchingBrackets`:
+- Press `ctrl(⌘) + ,` or navigate to `Code > Preferences > Settings`
+- Manually add `"editor.matchBrackets": false,` to the settings or press `ctrl(⌘) + f`, type `editor.matchBrackets` to locate the field, and set it to `false`.
 
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+![Settings](https://raw.githubusercontent.com/rafamel/subtle-brackets/master/images/settings.png)
 
 ## Extension Settings
 
@@ -29,39 +25,11 @@ This extension contributes the following settings:
 * `myExtension.enable`: enable/disable this extension
 * `myExtension.thing`: set to `blah` to do something
 
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
 ## Release Notes
-
-Users appreciate release notes as you update your extension.
 
 ### 1.0.0
 
-Initial release of ...
+Initial release of Subtle Brackets
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on OSX or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on OSX or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (OSX) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
 **Enjoy!**
