@@ -1,6 +1,8 @@
-# subtle-brackets README
+# Subtle Brackets
 
-This is the README for your extension "subtle-brackets". After writing up a brief description, we recommend including the following sections.
+Allows styling of matching brackets as the native VSCode [box around them](https://github.com/Microsoft/vscode/issues/23606) [impairs visibility](https://github.com/Microsoft/vscode/issues/12402).
+
+It does its own parsing, so you'll need to deactivate `matchingBrackets` by adding `"editor.matchBrackets": false,` to your `settings.json`.
 
 ## Features
 

@@ -1,7 +1,7 @@
 {
     "name": "subtle-brackets",
     "displayName": "Subtle Brackets",
-    "description": "Underlined matching brackets, instead of boxed",
+    "description": "Underlined matching brackets for VSCode",
     "version": "0.0.1",
     "publisher": "rafamel",
     "engines": {
@@ -11,14 +11,11 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "*"
     ],
     "main": "./out/src/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
-        }]
+        "commands": []
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",
