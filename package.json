@@ -1,10 +1,11 @@
 {
     "name": "subtle-brackets",
-    "displayName": "Subtle Matching Brackets",
+    "displayName": "Subtle Match Brackets",
     "description": "Underlined matching brackets and more",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "publisher": "rafamel",
     "icon": "images/icon.png",
+    "categories": [ "Other" ],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/rafamel/subtle-brackets"
@@ -13,20 +14,10 @@
         "url": "https://github.com/rafamel/subtle-brackets/issues"
     },
 	"license": "SEE LICENSE IN LICENSE",
-    "engines": {
-        "vscode": "^1.12.0"
-    },
-    "categories": [
-        "Other"
-    ],
-    "activationEvents": [
-        "*"
-    ],
+    "engines": {  "vscode": "^1.12.0" },
+    "activationEvents": [ "*" ],
     "main": "./out/src/extension",
     "contributes": {
-        "configurationDefaults": {
-            "editor.matchBrackets": false
-        },
         "configuration": {
             "type": "object",
             "title": "Suble Brackets",

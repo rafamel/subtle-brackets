@@ -1,35 +1,31 @@
 'use strict';
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-// import * as vscode from 'vscode';
-import { workspace, window, commands, Disposable, ExtensionContext, TextDocument, Range, Position, TextEditorDecorationType } from 'vscode';
+
+import * as vscode from 'vscode'; // VS Code extensibility API
 
 // This method is called when your extension is activated. Activation is
 // controlled by the activation events defined in package.json.
-export function activate(context: ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
     // Use the console to output diagnostic information (console.log) and errors (console.error).
     // This line of code will only be executed once when your extension is activated.
-    console.log('Subtle Brackets is now active!');
     
-    let bracketParser = new BracketParser();
-    let controller = new BracketParserController(bracketParser);
+    let runner = new Runner();
+    let controller = new Controller(runner);
     
     // Add to a list of disposables which are disposed when this extension is deactivated.
-    context.subscriptions.push(controller);
-    context.subscriptions.push(bracketParser);
+    context.subscriptions.push(controller, runner);
 
 }
 
-class BracketParser {
+class Runner {
 
     private bracketsDict: {'all': string[], 'open': string[], 'close': string[], 'pairs': {}};
-    private decoration: TextEditorDecorationType;
+    private decoration: vscode.TextEditorDecorationType;
     private past: boolean;
 
     constructor() {
 
-        let config = workspace.getConfiguration('subtleBrackets');
-        this.decoration = window.createTextEditorDecorationType(config.style);
+        let config = vscode.workspace.getConfiguration('subtleBrackets');
+        this.decoration = vscode.window.createTextEditorDecorationType(config.style);
         this.past = false;
         this.bracketsDict = {'all': [], 'open': [], 'close': [], 'pairs': {}};
 
@@ -45,10 +41,10 @@ class BracketParser {
         });
     }
 
-    public findBrackets() {
+    public run() {
 
         // Get the current text editor
-        let editor = window.activeTextEditor;
+        let editor = vscode.window.activeTextEditor;
         if (!editor) {
             return;
         }
@@ -57,8 +53,8 @@ class BracketParser {
         if (this.past) editor.setDecorations(this.decoration, []);
 
         let doc = editor.document,
-            selection = window.activeTextEditor.selection,
-            range = new Range(selection.start, selection.end);
+            selection = vscode.window.activeTextEditor.selection,
+            range = new vscode.Range(selection.start, selection.end);
 
         if (range.isEmpty) {
             // There's no selection, only the cursor on a position
@@ -92,7 +88,7 @@ class BracketParser {
             }
 
             // Range of the selected bracket
-            let aBracketRange = new Range(new Position(line, startPosChar), new Position(line, endPosChar));
+            let aBracketRange = new vscode.Range(new vscode.Position(line, startPosChar), new vscode.Position(line, endPosChar));
 
             // Let's see if the bracket is an opening or closing bracket
             let lineRest: string,
@@ -117,7 +113,7 @@ class BracketParser {
                 if (line === bLine && parseDirection > 0) bChar += endPosChar;
 
                 // Now we have `aBracketRange` and `bBracketRange`
-                let bBracketRange = new Range(new Position(bLine, bChar), new Position(bLine, bChar+1));
+                let bBracketRange = new vscode.Range(new vscode.Position(bLine, bChar), new vscode.Position(bLine, bChar+1));
 
                 this.past = true;
                 editor.setDecorations(this.decoration, [bBracketRange, aBracketRange]);
@@ -126,7 +122,7 @@ class BracketParser {
 
     }
 
-    private parseUntilComplement(open: number, aBracket: string, bBracket: string, line: number, lineText: string, direction: number, doc: TextDocument, lineCount: number): number[] {
+    private parseUntilComplement(open: number, aBracket: string, bBracket: string, line: number, lineText: string, direction: number, doc: vscode.TextDocument, lineCount: number): number[] {
         let lastChar: number;
 
         for (let ii = 0; ii < lineText.length; ii++) {
@@ -153,25 +149,22 @@ class BracketParser {
     }
 }
 
-class BracketParserController {
+class Controller {
 
-    private _bracketParser: BracketParser;
-    private _disposable: Disposable;
+    private _runner: Runner;
+    private _disposable: vscode.Disposable;
 
-    constructor(bracketParser: BracketParser) {
-        this._bracketParser = bracketParser;
-        this._bracketParser.findBrackets();
+    constructor(runner: Runner) {
+        this._runner = runner;
+        this._runner.run();
 
         // Subscribe to selection change and editor activation events
-        let subscriptions: Disposable[] = [];
-        window.onDidChangeTextEditorSelection(this._onEvent, this, subscriptions);
-        window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
-
-        // Update
-        this._bracketParser.findBrackets();
+        let subscriptions: vscode.Disposable[] = [];
+        vscode.window.onDidChangeTextEditorSelection(this._onEvent, this, subscriptions);
+        vscode.window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
 
         // Create a combined disposable from both event subscriptions
-        this._disposable = Disposable.from(...subscriptions);
+        this._disposable = vscode.Disposable.from(...subscriptions);
     }
 
     dispose() {
@@ -179,6 +172,6 @@ class BracketParserController {
     }
 
     private _onEvent() {
-        this._bracketParser.findBrackets();
+        this._runner.run();
     }
 }
