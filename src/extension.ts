@@ -45,9 +45,7 @@ class Runner {
 
         // Get the current text editor
         let editor = vscode.window.activeTextEditor;
-        if (!editor) {
-            return;
-        }
+        if (!editor) return;
 
         // Clean past styles
         if (this.past) editor.setDecorations(this.decoration, []);

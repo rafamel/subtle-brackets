@@ -16,7 +16,7 @@ The difference with the default boxes should be clear:
 
 ## Extension Settings
 
-Reload the window after changing your settings by pressing `ctrl(⌘) + r`. 
+If you wish, you can change the style applied to matching brackets. Reload the window after changing your settings by pressing `ctrl(⌘) + shift + p`, typing `Reload Window` and return.
 
 * **subtleBrackets.bracketPairs**: An array of the bracket pairs to match. There must be two characters per string. Default: `["{}", "[]", "()"]`.
 
@@ -26,9 +26,9 @@ Reload the window after changing your settings by pressing `ctrl(⌘) + r`.
 
 ## How to disable matchBrackets
 
-*Subtle Brackets* does its own parsing, so you'll need to deactivate the native `matchingBrackets`:
+*Subtle Brackets* does its own parsing, so you'll need to deactivate the native `matchBrackets`:
 - Press `ctrl(⌘) + ,` **or** navigate to `Code > Preferences > Settings`
-- Manually add `"editor.matchBrackets": false` to the settings **or** press `ctrl(⌘) + f`, type `editor.matchBrackets` to locate the field, and set it to `false`.
+- Manually add `"editor.matchBrackets": false` to your user settings **or** press `ctrl(⌘) + f`, type `editor.matchBrackets` to locate the field, and set it to `false`.
 
 ![Settings](https://raw.githubusercontent.com/rafamel/subtle-brackets/master/images/settings.png)
 
