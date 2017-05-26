@@ -8,7 +8,7 @@ Please **disable the native** `matchBrackets` (instructions below) after you ins
 
 ---
 
-*Subtle Brackets* allows custom styling of matching brackets as VSCode currently [boxes them](https://github.com/Microsoft/vscode/issues/23606), [impairing visibility](https://github.com/Microsoft/vscode/issues/12402). By default, it applies a subtle light/dark underline to the bracket next to the cursor and its matching pair.
+*Subtle Brackets* allows custom styling of matching brackets as VSCode currently [boxes them](https://github.com/Microsoft/vscode/issues/23606), [impairing visibility](https://github.com/Microsoft/vscode/issues/19534). By default, it applies a subtle light/dark underline to the bracket next to the cursor and its matching pair.
 
 The difference with the default boxes should be clear:
 
@@ -21,8 +21,8 @@ If you wish, you can change the style applied to matching brackets. Reload the w
 * **subtleBrackets.bracketPairs**: An array of the bracket pairs to match. There must be two characters per string. Default: `["{}", "[]", "()"]`.
 
 * **subtleBrackets.style**: Change the style of matching brackets. Default is light/dark underline (depending on the theme): `{ "borderWidth": "1px", "borderStyle": "none none solid none" }`. For a list of allowed keys check [DecorationRenderOptions](https://code.visualstudio.com/docs/extensionAPI/vscode-api#DecorationRenderOptions). Some alternative examples:
-    - *2px Blue underline:* `{ "borderColor": "blue", "borderWidth": "2px" }`
-    - *White font over red background:* `{ "color": "white", "backgroundColor": "red", "borderStyle": "none" }`
+    - 2px Blue underline: `{ "borderColor": "blue", "borderWidth": "2px" }`
+    - White font over red background: `{ "color": "white", "backgroundColor": "red", "borderStyle": "none" }`
 
 ## How to disable matchBrackets
 

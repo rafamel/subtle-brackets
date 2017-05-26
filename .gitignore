@@ -5,6 +5,7 @@ out
 # Node, Frameworks, Editors #
 #############################
 node_modules
+# .vscode
 
 # Compiled source #
 ###################

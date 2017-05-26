@@ -2,7 +2,7 @@
     "name": "subtle-brackets",
     "displayName": "Subtle Match Brackets",
     "description": "Underlined matching brackets and more",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "publisher": "rafamel",
     "icon": "images/icon.png",
     "categories": [ "Other" ],

@@ -31,12 +31,12 @@ class Runner {
 
         config.bracketPairs.forEach(x => {
             if (x.length === 2) { // Safety Check
-                let split = x.split('');
-                this.bracketsDict['all'].push(split[0], split[1]);
-                this.bracketsDict['open'].push(split[0]);
-                this.bracketsDict['close'].push(split[1]);
-                this.bracketsDict['pairs'][split[0]] = split[1];
-                this.bracketsDict['pairs'][split[1]] = split[0];
+                let [open, close] = x.split('');
+                this.bracketsDict['all'].push(open, close);
+                this.bracketsDict['open'].push(open);
+                this.bracketsDict['close'].push(close);
+                this.bracketsDict['pairs'][open] = close;
+                this.bracketsDict['pairs'][close] = open;
             }
         });
     }
