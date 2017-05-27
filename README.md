@@ -4,6 +4,8 @@
 
 *Underlined matching brackets and more for Visual Studio Code.* 
 
+[Subtle Brackets @ Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=rafamel.subtle-brackets)
+
 Please **disable the native** `matchBrackets` (instructions below) after you install *Subtle Brackets*.
 
 ---
