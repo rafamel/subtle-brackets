@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the *Subtle Brackets* extension will be documented in this file.
 
+## [1.0.6] 2017-06-01
+- *Readme* and images improvements.
+-  Added video instructions.
+
 ## [1.0.5] 2017-05-27
 - Fix removing of decoration only when previously applied.
 - *Runner* class moved to a separate file.

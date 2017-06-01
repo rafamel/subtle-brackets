@@ -2,9 +2,9 @@
     "name": "subtle-brackets",
     "displayName": "Subtle Match Brackets",
     "description": "Underlined matching brackets and more",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "publisher": "rafamel",
-    "icon": "images/icon.png",
+    "icon": "icon_256.png",
     "categories": [ "Other" ],
 	"repository": {
 		"type": "git",
