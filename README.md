@@ -34,7 +34,8 @@ If you wish, you can change the style applied to matching brackets. Reload the w
     - 2px Blue underline: `{ "borderColor": "blue", "borderWidth": "2px" }`
     - White font over red background: `{ "color": "white", "backgroundColor": "red", "borderStyle": "none" }`
 
+* **subtleBrackets.parse**: Boolean. If `true`, the document will be properly parsed via [Prism](http://prismjs.com/), when possible, so brackets within strings don't trigger the decoration. Default: `true`.
+
 ## To-do
 
 - Highlight non matching brackets.
-- Don't apply to strings.

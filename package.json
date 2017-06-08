@@ -1,67 +1,86 @@
 {
-    "name": "subtle-brackets",
-    "displayName": "Subtle Match Brackets",
-    "description": "Underlined matching brackets and more",
-    "version": "1.0.6",
-    "publisher": "rafamel",
-    "author": {
-        "name": "rafamel"
-    },
-    "icon": "icon_256.png",
-    "galleryBanner": {
-        "color": "#202329",
-        "theme": "dark"
-    },
-    "categories": [ "Other" ],
-    "keywords": [
-        "bracket",
-        "brackets",
-        "match",
-        "matching"
-    ],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/rafamel/subtle-brackets"
-	},
-    "bugs": {
-        "url": "https://github.com/rafamel/subtle-brackets/issues"
-    },
-	"license": "SEE LICENSE IN LICENSE",
-    "engines": {  "vscode": "^1.12.0" },
-    "activationEvents": [ "*" ],
-    "main": "./out/src/extension",
-    "contributes": {
-        "configuration": {
-            "type": "object",
-            "title": "Suble Brackets",
-            "properties": {
-                "subtleBrackets.bracketPairs": {
-                    "type": "string[]",
-                    "default": ["{}", "[]", "()"],
-                    "description": "Pairs of matching brackets"
-                },
-                "subtleBrackets.style": {
-                    "type": "object",
-                    "default": {
-                        "borderWidth": "1px",
-                        "borderStyle": "none none solid none"
-                    },
-                    "description": "Custom style for matching brackets"
-                }
-            }
+  "name": "subtle-brackets",
+  "displayName": "Subtle Match Brackets",
+  "description": "Underlined matching brackets and more",
+  "version": "1.0.7",
+  "publisher": "rafamel",
+  "author": {
+    "name": "rafamel"
+  },
+  "icon": "icon_256.png",
+  "galleryBanner": {
+    "color": "#202329",
+    "theme": "dark"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "bracket",
+    "brackets",
+    "match",
+    "matching"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafamel/subtle-brackets"
+  },
+  "bugs": {
+    "url": "https://github.com/rafamel/subtle-brackets/issues"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "engines": {
+    "vscode": "^1.12.0"
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/src/extension",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Suble Brackets",
+      "properties": {
+        "subtleBrackets.bracketPairs": {
+          "type": "string[]",
+          "default": [
+            "{}",
+            "[]",
+            "()"
+          ],
+          "description": "Pairs of matching brackets"
+        },
+        "subtleBrackets.style": {
+          "type": "object",
+          "default": {
+            "borderWidth": "1px",
+            "borderStyle": "none none solid none"
+          },
+          "description": "Custom style for matching brackets"
+        },
+        "subtleBrackets.parse": {
+          "type": "boolean",
+          "default": true,
+          "description": "If true, the document will be parsed so brackets within strings don't trigger the decoration"
         }
-    },
-    "scripts": {
-        "vscode:prepublish": "tsc -p ./",
-        "compile": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "typescript": "^2.0.3",
-        "vscode": "^1.0.0",
-        "mocha": "^2.3.3",
-        "@types/node": "^6.0.40",
-        "@types/mocha": "^2.2.32"
+      }
     }
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "typescript": "^2.3.4",
+    "vscode": "^1.0.0",
+    "mocha": "^2.3.3",
+    "@types/node": "^6.0.78",
+    "@types/mocha": "^2.2.32"
+  },
+  "dependencies": {
+    "prism-languages": "^0.3.3",
+    "prismjs": "^1.6.0"
+  }
 }
