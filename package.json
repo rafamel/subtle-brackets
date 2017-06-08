@@ -4,8 +4,21 @@
     "description": "Underlined matching brackets and more",
     "version": "1.0.6",
     "publisher": "rafamel",
+    "author": {
+        "name": "rafamel"
+    },
     "icon": "icon_256.png",
+    "galleryBanner": {
+        "color": "#202329",
+        "theme": "dark"
+    },
     "categories": [ "Other" ],
+    "keywords": [
+        "bracket",
+        "brackets",
+        "match",
+        "matching"
+    ],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/rafamel/subtle-brackets"
@@ -29,9 +42,9 @@
                 },
                 "subtleBrackets.style": {
                     "type": "object",
-                    "default": { 
+                    "default": {
                         "borderWidth": "1px",
-                        "borderStyle": "none none solid none" 
+                        "borderStyle": "none none solid none"
                     },
                     "description": "Custom style for matching brackets"
                 }

@@ -5,7 +5,7 @@ out
 # Node, Frameworks, Editors #
 #############################
 node_modules
-# .vscode
+npm-debug.log
 
 # Compiled source #
 ###################

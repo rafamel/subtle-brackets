@@ -33,3 +33,8 @@ If you wish, you can change the style applied to matching brackets. Reload the w
 * **subtleBrackets.style**: Change the style of matching brackets. Default is light/dark underline (depending on the theme): `{ "borderWidth": "1px", "borderStyle": "none none solid none" }`. For a list of allowed keys check [DecorationRenderOptions](https://code.visualstudio.com/docs/extensionAPI/vscode-api#DecorationRenderOptions). Some alternative examples:
     - 2px Blue underline: `{ "borderColor": "blue", "borderWidth": "2px" }`
     - White font over red background: `{ "color": "white", "backgroundColor": "red", "borderStyle": "none" }`
+
+## To-do
+
+- Highlight non matching brackets.
+- Don't apply to strings.
