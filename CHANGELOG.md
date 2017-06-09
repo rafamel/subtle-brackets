@@ -1,12 +1,8 @@
 # Change Log
 All notable changes to *Subtle Brackets* will be documented in this file.
 
-## [1.1.0] 2017-06-09
-- README: Settings to table
-- Set `matchBrackets` to `false` automatically
-- [Prism](http://prismjs.com/) to stable: fix errors.
-
 ## [1.0.8] 2017-06-09
+- README: Settings to table
 - Fix for VSCode v1.13.0: ensure automatic border color for dark and light themes
 
 ## [1.0.7] 2017-06-08
