@@ -18,7 +18,7 @@ You can also customize the style applied to matching brackets:
 
 ![Settings](https://raw.githubusercontent.com/rafamel/subtle-brackets/master/images/rundown.gif)
 
-## Disable matchBrackets
+## Disable *matchBrackets*
 
 *Subtle Brackets* does its own parsing, so you'll need to deactivate the native `matchBrackets`:
 - Press `ctrl(⌘) + ,` **or** navigate to `Code > Preferences > Settings`
@@ -28,14 +28,19 @@ You can also customize the style applied to matching brackets:
 
 If you wish, you can change the style applied to matching brackets. Reload the window after changing your settings by pressing `ctrl(⌘) + shift + p`, typing `Reload Window` and return.
 
-* **subtleBrackets.bracketPairs**: An array of the bracket pairs to match. There must be two characters per string. Default: `["{}", "[]", "()"]`.
+Setting | Default | Description
+---|---|---
+**subtleBrackets.bracketPairs** | `["{}", "[]", "()"]` | An array of the bracket pairs to match. There must be two characters per string.
+**subtleBrackets.style** | `{ "borderWidth": "1px", "borderStyle": "none none solid none" }` | Change the style of matching brackets. Default is light/dark underline (depending on the theme).
+**subtleBrackets.parse** | `true` | If `true`, the document will be properly parsed via [Prism](http://prismjs.com/), when possible, so brackets within strings and comments don't trigger the decoration. Here are the [edge cases](http://prismjs.com/examples.html#failures).
 
-* **subtleBrackets.style**: Change the style of matching brackets. Default is light/dark underline (depending on the theme): `{ "borderWidth": "1px", "borderStyle": "none none solid none" }`. For a list of allowed keys check [DecorationRenderOptions](https://code.visualstudio.com/docs/extensionAPI/vscode-api#DecorationRenderOptions). Some alternative examples:
-    - 2px Blue underline: `{ "borderColor": "blue", "borderWidth": "2px" }`
-    - White font over red background: `{ "color": "white", "backgroundColor": "red", "borderStyle": "none" }`
+For a list of allowed keys on **subtleBrackets.style** check [DecorationRenderOptions](https://code.visualstudio.com/docs/extensionAPI/vscode-api#DecorationRenderOptions). Some alternative examples are:
 
-* **subtleBrackets.parse**: Boolean. If `true`, the document will be properly parsed via [Prism](http://prismjs.com/), when possible, so brackets within strings don't trigger the decoration. Default: `true`.
+- 2px Blue underline: `{ "borderColor": "blue", "borderWidth": "2px" }`
 
-## To-do
+- White font over red background: `{ "color": "white", "backgroundColor": "red", "borderStyle": "none" }`
 
-- Highlight non matching brackets.
+## Todo
+
+- Set `matchBrackets` to `false` automatically
+- Redo rundown

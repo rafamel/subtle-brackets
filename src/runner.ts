@@ -15,9 +15,16 @@ export class Runner {
 
     constructor() {
 
-        const escape = (s) => s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),
+        const escape = (s) => s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), // FIXME First parenthesis doesn't work with subtle brackets
             config = vscode.workspace.getConfiguration('subtleBrackets');
-        this.decoration = vscode.window.createTextEditorDecorationType(config.style);
+
+        let style = config.style;
+        if (!config.style.hasOwnProperty('borderColor')) {
+            style.borderColor = '#D4D4D4';
+            style.light = { 'borderColor': '#333333' };
+        }
+
+        this.decoration = vscode.window.createTextEditorDecorationType(style);
         this.past = false;
         this.bracketsDict = {'all': [], 'open': [], 'close': [], 'pairs': {}};
         this.languages = Object.keys(prismLanguages);
@@ -35,7 +42,6 @@ export class Runner {
         });
 
         this.regexp = new RegExp('[' + escape(this.bracketsDict['all'].join('')) + ']', 'g');
-
     }
 
     public run() {
@@ -91,13 +97,15 @@ export class Runner {
             startPosChar = prevChar;
             endPosChar = startChar;
         } else {
-            // If no bracket found to left or right, return
+            // If no valid bracket is found to left or right, return
             return;
         }
 
         // Range of the selected bracket
-        let aBracketRange = new vscode.Range(new vscode.Position(line, startPosChar),
-                                                new vscode.Position(line, endPosChar));
+        let aBracketRange = new vscode.Range(
+                new vscode.Position(line, startPosChar),
+                new vscode.Position(line, endPosChar)
+            );
 
         // Let's see if the bracket is an opening or closing bracket
         let lineRest: string,
@@ -118,19 +126,19 @@ export class Runner {
                                 lineRest, parseDirection, doc, doc.lineCount,
                                 knownLanguage, typesFound, parsedDocBrackets);
 
-        // Verify the parsing was successful
-        if (bLine >= 0) {
-            // If it's closing at the same line, correct `bChar`
-            if (line === bLine && parseDirection > 0) bChar += endPosChar;
+        // Verify the parsing didn't fail
+        if (bLine < 0) return;
 
-            // Now we have `aBracketRange` and `bBracketRange`
-            let bBracketRange = new vscode.Range(new vscode.Position(bLine, bChar),
-                                                    new vscode.Position(bLine, bChar+1));
+        // If it's closing at the same line, correct `bChar`
+        if (line === bLine && parseDirection > 0) bChar += endPosChar;
 
-            this.past = true;
-            editor.setDecorations(this.decoration, [bBracketRange, aBracketRange]);
-        }
-
+        // Now we have `aBracketRange` and `bBracketRange`
+        let bBracketRange = new vscode.Range(
+                new vscode.Position(bLine, bChar),
+                new vscode.Position(bLine, bChar+bBracket.length)
+            );
+        this.past = true;
+        editor.setDecorations(this.decoration, [bBracketRange, aBracketRange]);
     }
 
     private parseUntilComplement(open: number, aBracket: string, bBracket: string,
@@ -170,7 +178,7 @@ export class Runner {
             parsedDocBrackets: Object, line: number, bracket: string, lineTill: string) {
         if ((!knownLanguage) || ((!typesFound.indexOf(bracket))
                         && (!typesFound.indexOf(this.bracketsDict.pairs[bracket])))) {
-            // Decorate all if language is not known or no bracket at all of that type
+            // Decorate all if language is not known or no bracket at all of that pair
             // is found to be of the punctuation type
             return true;
         }
@@ -226,9 +234,9 @@ export class Runner {
         }
         if (!tokenized) return emptyAns;
 
-        const orgContent = getContent({}, {}, tokenized, 0, 0),
-            lines = orgContent[0],
-            typesFound = Object.keys(orgContent[1]);
+        const ansGetContent = getContent({}, {}, tokenized, 0, 0),
+            lines = ansGetContent[0],
+            typesFound = Object.keys(ansGetContent[1]);
         return [language, lines, typesFound];
     }
 

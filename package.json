@@ -2,16 +2,12 @@
   "name": "subtle-brackets",
   "displayName": "Subtle Match Brackets",
   "description": "Underlined matching brackets and more",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "publisher": "rafamel",
   "author": {
     "name": "rafamel"
   },
   "icon": "icon_256.png",
-  "galleryBanner": {
-    "color": "#202329",
-    "theme": "dark"
-  },
   "categories": [
     "Other"
   ],
