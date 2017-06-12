@@ -2,7 +2,7 @@
   "name": "subtle-brackets",
   "displayName": "Subtle Match Brackets",
   "description": "Underlined matching brackets and more",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "publisher": "rafamel",
   "author": {
     "name": "rafamel"
@@ -37,6 +37,16 @@
       "type": "object",
       "title": "Suble Brackets",
       "properties": {
+        "subtleBrackets.parse": {
+          "type": "boolean",
+          "default": true,
+          "description": "If true, the document will be parsed so brackets within strings don't trigger the decoration"
+        },
+        "subtleBrackets.disableNative": {
+          "type": "boolean",
+          "default": true,
+          "description": "Permanently disable the native matchBrackets"
+        },
         "subtleBrackets.bracketPairs": {
           "type": "string[]",
           "default": [
@@ -53,11 +63,6 @@
             "borderStyle": "none none solid none"
           },
           "description": "Custom style for matching brackets"
-        },
-        "subtleBrackets.parse": {
-          "type": "boolean",
-          "default": true,
-          "description": "If true, the document will be parsed so brackets within strings don't trigger the decoration"
         }
       }
     }
@@ -73,7 +78,9 @@
     "vscode": "^1.0.0",
     "mocha": "^2.3.3",
     "@types/node": "^6.0.78",
-    "@types/mocha": "^2.2.32"
+    "@types/mocha": "^2.2.32",
+    "tslint": "^5.4.3",
+    "tslint-language-service": "^0.9.6"
   },
   "dependencies": {
     "prism-languages": "^0.3.3",
