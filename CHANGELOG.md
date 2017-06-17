@@ -1,9 +1,10 @@
 # Change Log
 All notable changes to *Subtle Brackets* will be documented in this file.
 
-## [2.0.0] 2017-06-16
+## [2.0.0] 2017-06-17
 - Styles can target specific bracket pairs
-- Style setting configuration modified
+- Styles settings modified
+- Automatically apply new settings
 
 ## [1.1.0] 2017-06-12
 - [Prism](http://prismjs.com/) to stable: fix errors
@@ -27,14 +28,14 @@ All notable changes to *Subtle Brackets* will be documented in this file.
 
 ## [1.0.4] 2017-05-26
 - README
-- Refactoring
+- Partial rewrite
 
 ## [1.0.3] 2017-05-22
 - README
 
 ## [1.0.2] 2017-05-19
 - Change of Market name from `Subtle Matching Brackets` to `Subtle Match Brackets`
-- Refactoring
+- Partial rewrite
 
 ## [1.0.1] 2017-05-18
 - Safety check when obtaining the character to the right of the cursor

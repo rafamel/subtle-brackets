@@ -21,20 +21,17 @@ export class Runner {
 
     private bracketsDict: { all: string[], open: string[], close: string[], pairs: {} };
     private decorations: { [key: string]: vscode.TextEditorDecorationType };
-    private past: boolean;
+    private past: vscode.TextEditor;
     private languages: string[];
     private regexp: RegExp;
     private parse: boolean;
-    private settings: string; // todo
 
-    constructor () {
+    constructor (private settings: vscode.WorkspaceConfiguration) {
 
         const escape = (s) => s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 
-        const settings = vscode.workspace.getConfiguration('subtleBrackets');
-        this.settings = JSON.stringify(settings);
         this.decorations = {};
-        this.past = false;
+        this.past = null;
         this.bracketsDict = {'all': [], 'open': [], 'close': [], 'pairs': {}};
         this.languages = Object.keys(prismLanguages);
         this.parse = settings.parse;
@@ -74,7 +71,15 @@ export class Runner {
     }
 
     // PUBLIC
-    public dispose() { }
+    public dispose() {
+        if (this.past) {
+            for (const decorationKey of Object.keys(this.decorations)) {
+                const decoration = this.decorations[decorationKey];
+                this.past.setDecorations(decoration, []);
+            }
+            this.past = null;
+        }
+    }
 
     public run() {
 
@@ -83,13 +88,7 @@ export class Runner {
         if (!editor) return;
 
         // Clean past styles
-        if (this.past) {
-            for (const decorationKey of Object.keys(this.decorations)) {
-                const decoration = this.decorations[decorationKey];
-                editor.setDecorations(decoration, []);
-            }
-            this.past = false;
-        }
+        this.dispose();
 
         const doc = editor.document;
         const selection = vscode.window.activeTextEditor.selection;
@@ -190,7 +189,7 @@ export class Runner {
         if (this.decorations.hasOwnProperty(bracketPair)) {
             decoration = this.decorations[bracketPair];
         }
-        this.past = true;
+        this.past = editor;
         editor.setDecorations(decoration, [bBracketRange, aBracketRange]);
     }
 

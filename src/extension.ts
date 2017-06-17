@@ -1,5 +1,7 @@
 'use strict';
 import * as vscode from 'vscode'; // VS Code extensibility API
+import * as path from 'path'; // VS Code extensibility API
+import * as delay from 'timeout-as-promise'; // VS Code extensibility API
 import { Runner } from './runner';
 
 // This method is called when your extension is activated. Activation is
@@ -8,10 +10,31 @@ export function activate(context: vscode.ExtensionContext) {
     // Use the console to output diagnostic information (console.log) and errors (console.error).
     // This line of code will only be executed once when your extension is activated.
 
-    // TODO autodetect settings.json changes and add to changelog
+    let settings = vscode.workspace.getConfiguration('subtleBrackets');
+    let settingsStr = JSON.stringify(settings);
 
-    const runner = new Runner();
-    const controller = new Controller(runner);
+    let runner = new Runner(settings);
+    let controller = new Controller(runner);
+
+    // Register Save Event
+    const saveEv = vscode.workspace.onDidSaveTextDocument((saved) => {
+        delay(2000) // Changes are not immediately applied, set a delay
+        .then(() => {
+            const fileName = path.basename(saved.fileName);
+            if (fileName !== 'settings.json') return;
+
+            settings = vscode.workspace.getConfiguration('subtleBrackets');
+            const newSettingsStr = JSON.stringify(settings);
+            if (settingsStr === newSettingsStr) return;
+
+            settingsStr = newSettingsStr;
+            // Reset runner and controller
+            runner.dispose();
+            runner = new Runner(settings);
+            controller.dispose();
+            controller = new Controller(runner);
+        });
+    });
 
     // Disable matchBrackets
     const disableNative = vscode.workspace.getConfiguration().get<boolean>('subtleBrackets.disableNative');
@@ -20,7 +43,16 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     // Add to a list of disposables which are disposed when this extension is deactivated.
-    context.subscriptions.push(controller, runner);
+    context.subscriptions.push(controller, runner, saveEv);
+}
+
+// Method called when the extension is deactivated
+export function deactivate(context: vscode.ExtensionContext) {
+    const disableNative = vscode.workspace.getConfiguration().get<boolean>('subtleBrackets.disableNative');
+    const matchBrackets = vscode.workspace.getConfiguration().get<boolean>('editor.matchBrackets');
+    if (disableNative && !matchBrackets) {
+        vscode.workspace.getConfiguration().update('editor.matchBrackets', true, true);
+    }
 }
 
 class Controller {
