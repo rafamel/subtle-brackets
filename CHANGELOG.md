@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to *Subtle Brackets* will be documented in this file.
 
+## [2.0.0] 2017-06-16
+- Styles can target specific bracket pairs
+- Style setting configuration modified
+
 ## [1.1.0] 2017-06-12
 - [Prism](http://prismjs.com/) to stable: fix errors
 - Set `matchBrackets` to `false` automatically

@@ -31,10 +31,34 @@ Setting | Default | Description
 **subtleBrackets.parse** | `true` | If `true`, the document will be properly parsed via [Prism](http://prismjs.com/), whenever possible, so brackets within strings and comments don't trigger the decoration. There are [some edge cases](http://prismjs.com/examples.html#failures).
 **subtleBrackets.disableNative** | `true` | *Subtle Brackets* permanently disables the native `matchBrackets` by default. Turn to `false` to prevent this behavior.
 **subtleBrackets.bracketPairs** | `["{}", "[]", "()"]` | An array of the bracket pairs to match. There must be two characters per string.
-**subtleBrackets.style** | `{ "borderWidth": "1px", "borderStyle": "none none solid none" }` | Change the style of matching brackets. Default is light/dark underline (depending on the theme).
+**subtleBrackets.styles** | `{ "global": { "borderWidth": "1px", "borderStyle": "none none solid none" } }` | Change the global style of matching brackets. The default is a light/dark underline (depending on your current theme).
 
-For a list of allowed keys on **subtleBrackets.style** check [DecorationRenderOptions](https://code.visualstudio.com/docs/extensionAPI/vscode-api#DecorationRenderOptions). Some alternative examples are:
+### Styles
 
-- 2px Blue underline: `{ "borderColor": "blue", "borderWidth": "2px" }`
+You can customize styles for specific bracket pairs in **subtleBrackets.styles** by creating a key matching that pair with its style. For a list of allowed styles check [DecorationRenderOptions](https://code.visualstudio.com/docs/extensionAPI/vscode-api#DecorationRenderOptions). Some alternative examples are:
 
-- White font over red background: `{ "color": "white", "backgroundColor": "red", "borderStyle": "none" }`
+- 2px Blue underline global style
+```javascript
+"subtleBrackets.styles": { 
+    "global": { 
+        "borderColor": "blue",
+        "borderWidth": "2px"
+    }
+}
+```
+
+- Default global style and white font over red background only for `"[]"`
+```javascript
+"subtleBrackets.styles": {
+    "global": {
+        "borderWidth": "1px",
+        "borderStyle": "none none solid none"
+    },
+    "[]": { 
+        "color": "white",
+        "backgroundColor": "red",
+        "borderStyle": "none"
+    }
+}
+```
+

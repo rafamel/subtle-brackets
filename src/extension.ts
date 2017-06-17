@@ -7,8 +7,10 @@ import { Runner } from './runner';
 export function activate(context: vscode.ExtensionContext) {
     // Use the console to output diagnostic information (console.log) and errors (console.error).
     // This line of code will only be executed once when your extension is activated.
+
+    // TODO autodetect settings.json changes and add to changelog
+
     const runner = new Runner();
-    // tslint:disable-next-line:no-use-before-declare
     const controller = new Controller(runner);
 
     // Disable matchBrackets

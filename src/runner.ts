@@ -20,30 +20,45 @@ interface IKeepParsingObj {
 export class Runner {
 
     private bracketsDict: { all: string[], open: string[], close: string[], pairs: {} };
-    private decoration: vscode.TextEditorDecorationType;
+    private decorations: { [key: string]: vscode.TextEditorDecorationType };
     private past: boolean;
     private languages: string[];
     private regexp: RegExp;
     private parse: boolean;
+    private settings: string; // todo
 
     constructor () {
 
         const escape = (s) => s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-        const config = vscode.workspace.getConfiguration('subtleBrackets');
 
-        const style = config.style;
-        if (!config.style.hasOwnProperty('borderColor')) {
-            style.borderColor = '#D4D4D4';
-            style.light = { borderColor: '#333333' };
+        const settings = vscode.workspace.getConfiguration('subtleBrackets');
+        this.settings = JSON.stringify(settings);
+        this.decorations = {};
+        this.past = false;
+        this.bracketsDict = {'all': [], 'open': [], 'close': [], 'pairs': {}};
+        this.languages = Object.keys(prismLanguages);
+        this.parse = settings.parse;
+
+        // Decorations
+        const styles = settings.styles;
+        if (!styles.hasOwnProperty('global')) {
+            styles.global = {
+              'borderWidth': '1px',
+              'borderStyle': 'none none solid none'
+            };
+        }
+        for (const styleFor of Object.keys(styles)) {
+            if (styleFor === 'global' || settings.bracketPairs.indexOf(styleFor) !== -1) {
+                if (!styles[styleFor].hasOwnProperty('borderColor')) {
+                    styles[styleFor].borderColor = '#D4D4D4';
+                    styles[styleFor].light = { 'borderColor': '#333333' };
+                }
+                this.decorations[styleFor] = vscode.window.createTextEditorDecorationType(styles[styleFor]);
+            }
         }
 
-        this.decoration = vscode.window.createTextEditorDecorationType(style);
-        this.past = false;
-        this.bracketsDict = {all: [], open: [], close: [], pairs: {}};
-        this.languages = Object.keys(prismLanguages);
-        this.parse = config.parse;
-
-        config.bracketPairs.forEach(x => {
+        // Bracket Pairs
+        settings.bracketPairs.forEach(x => {
             if (x.length === 2) { // Safety Check
                 const [open, close] = x.split('');
                 this.bracketsDict.all.push(open, close);
@@ -54,11 +69,12 @@ export class Runner {
             }
         });
 
+        // Regexp
         this.regexp = new RegExp('[' + escape(this.bracketsDict.all.join('')) + ']', 'g');
     }
 
     // PUBLIC
-    public dispose() {  }
+    public dispose() { }
 
     public run() {
 
@@ -68,7 +84,10 @@ export class Runner {
 
         // Clean past styles
         if (this.past) {
-            editor.setDecorations(this.decoration, []);
+            for (const decorationKey of Object.keys(this.decorations)) {
+                const decoration = this.decorations[decorationKey];
+                editor.setDecorations(decoration, []);
+            }
             this.past = false;
         }
 
@@ -139,17 +158,17 @@ export class Runner {
         // Complement of `aBracket`
         const bBracket = this.bracketsDict.pairs[aBracket];
         const kpObj = {
-            open: 1,
-            aBracket: aBracket,
-            bBracket: bBracket,
-            line: line,
-            lineText: lineRest,
-            direction: parseDirection,
-            doc: doc,
-            lineCount: doc.lineCount,
-            knownLanguage: knownLanguage,
-            typesFound: typesFound,
-            parsedDocBrackets: parsedDocBrackets
+            'open': 1,
+            'aBracket': aBracket,
+            'bBracket': bBracket,
+            'line': line,
+            'lineText': lineRest,
+            'direction': parseDirection,
+            'doc': doc,
+            'lineCount': doc.lineCount,
+            'knownLanguage': knownLanguage,
+            'typesFound': typesFound,
+            'parsedDocBrackets': parsedDocBrackets
         };
 
         // tslint:disable-next-line:prefer-const
@@ -166,8 +185,13 @@ export class Runner {
             new vscode.Position(bLine, bChar),
             new vscode.Position(bLine, bChar+bBracket.length)
         );
+        const bracketPair = (parseDirection > 0) ? aBracket + bBracket : bBracket + aBracket;
+        let decoration = this.decorations.global;
+        if (this.decorations.hasOwnProperty(bracketPair)) {
+            decoration = this.decorations[bracketPair];
+        }
         this.past = true;
-        editor.setDecorations(this.decoration, [bBracketRange, aBracketRange]);
+        editor.setDecorations(decoration, [bBracketRange, aBracketRange]);
     }
 
     // PRIVATE
@@ -270,7 +294,7 @@ export class Runner {
             return [lines, typesFound, currentLine, currentLineAt, currentLineAt];
         };
 
-        const emptyAns = { knownLanguage: '', parsedDocBrackets: {}, typesFound: [] };
+        const emptyAns = { 'knownLanguage': '', 'parsedDocBrackets': {}, 'typesFound': [] };
         const language = doc.languageId;
         if ((!this.parse) || (!this.languages.indexOf(language))) return emptyAns;
 
@@ -286,9 +310,9 @@ export class Runner {
 
         const ansGetContent = getContent({}, {}, tokenized, 0, 0);
         return {
-            knownLanguage: language,
-            parsedDocBrackets: ansGetContent[0],
-            typesFound: Object.keys(ansGetContent[1])
+            'knownLanguage': language,
+            'parsedDocBrackets': ansGetContent[0],
+            'typesFound': Object.keys(ansGetContent[1])
         };
     }
 
