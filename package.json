@@ -2,7 +2,7 @@
   "name": "subtle-brackets",
   "displayName": "Subtle Match Brackets",
   "description": "Underlined matching brackets and more",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "publisher": "rafamel",
   "author": {
     "name": "rafamel"
@@ -64,7 +64,7 @@
               "borderStyle": "none none solid none"
             }
           },
-          "description": "Custom style for matching brackets"
+          "description": "Custom styles for matching brackets"
         }
       }
     }

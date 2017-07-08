@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to *Subtle Brackets* will be documented in this file.
 
+## [2.0.1] 2017-07-08
+- Solve multi-line comments [issue](https://github.com/rafamel/subtle-brackets/issues/2)
+
 ## [2.0.0] 2017-06-17
 - Styles can target specific bracket pairs
 - Styles settings modified

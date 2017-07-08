@@ -121,12 +121,12 @@ export class Runner {
         let startPosChar: number;
         let endPosChar: number;
         if (isRight && this.isPunctuationType(knownLanguage, typesFound,
-                                        parsedDocBrackets, line, right, lineTillRight)) {
+                                    parsedDocBrackets, line, right, lineTillRight)) {
             aBracket = right;
             startPosChar = startChar;
             endPosChar = postChar;
         } else if (isLeft && this.isPunctuationType(knownLanguage, typesFound,
-                                        parsedDocBrackets, line, left, lineTillLeft)) {
+                                    parsedDocBrackets, line, left, lineTillLeft)) {
             aBracket = left;
             startPosChar = prevChar;
             endPosChar = startChar;
@@ -262,13 +262,19 @@ export class Runner {
                                                                 typesFound: string[]} {
         // Helper Function
         const getContent = (lines, typesFound, tokenized, currentLine, currentLineAt) => {
+            /* tslint:disable-next-line:no-shadowed-variable */
+            const countStringLines = (str, currentLine) => {
+                const splits = str.split('\n');
+                currentLine = currentLine + splits.length-1;
+                currentLineAt = splits.slice(-1)[0].length;
+                return [currentLine, currentLineAt];
+            };
             tokenized.forEach(token => {
                 if (typeof token === 'string') {
-                    const splits = token.split('\n');
-                    currentLine = currentLine + splits.length-1;
-                    currentLineAt = splits.slice(-1)[0].length;
-                }
-                else if (typeof token.content === 'string') {
+                    [currentLine, currentLineAt] = countStringLines(token, currentLine);
+                } else if (token.type === 'comment' && typeof token.content === 'string') {
+                    [currentLine, currentLineAt] = countStringLines(token.content, currentLine);
+                } else if (typeof token.content === 'string') {
                     const currentContent = token.content;
                     const matches = currentContent.match(this.regexp);
                     if (matches) matches.forEach(bracket => {
@@ -284,13 +290,13 @@ export class Runner {
                 } else if (Array.isArray(token.content)){
                     [lines,
                     typesFound,
+                    tokenized,
                     currentLine,
-                    currentLineAt,
                     currentLineAt] = getContent(lines, typesFound, token.content,
-                                                            currentLine, currentLineAt);
+                                                        currentLine, currentLineAt);
                 }
             });
-            return [lines, typesFound, currentLine, currentLineAt, currentLineAt];
+            return [lines, typesFound, tokenized, currentLine, currentLineAt];
         };
 
         const emptyAns = { 'knownLanguage': '', 'parsedDocBrackets': {}, 'typesFound': [] };
@@ -308,6 +314,7 @@ export class Runner {
         if (!tokenized) return emptyAns;
 
         const ansGetContent = getContent({}, {}, tokenized, 0, 0);
+        console.log(ansGetContent);
         return {
             'knownLanguage': language,
             'parsedDocBrackets': ansGetContent[0],
