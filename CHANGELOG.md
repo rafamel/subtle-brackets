@@ -1,5 +1,8 @@
 # Change Log
-All notable changes to *Subtle Brackets* will be documented in this file.
+All notable changes to *Subtle Brackets* will be documented in this file
+
+## [2.0.2] 2017-07-09
+- Reimplement Prism usage to fix some edge cases with comments
 
 ## [2.0.1] 2017-07-08
 - Solve multi-line comments [issue](https://github.com/rafamel/subtle-brackets/issues/2)

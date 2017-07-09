@@ -261,31 +261,36 @@ export class Runner {
     private parseDocBrackets(doc): {knownLanguage: string, parsedDocBrackets: object,
                                                                 typesFound: string[]} {
         // Helper Function
-        const getContent = (lines, typesFound, tokenized, currentLine, currentLineAt) => {
+        const getContent = (lines, typesFound, tokenized, currentLine, currentLineAt: string[]) => {
             /* tslint:disable-next-line:no-shadowed-variable */
-            const countStringLines = (str, currentLine) => {
-                const splits = str.split('\n');
-                currentLine = currentLine + splits.length-1;
-                currentLineAt = splits.slice(-1)[0].length;
+            const countStringLines = (str, currentLine, currentLineAt) => {
+                str = str.trim();
+                if (!str) return [currentLine, currentLineAt];
+                if (currentLine >= doc.lineCount) throw Error('Line count higher than doc.');
+                let docAtLine = doc.lineAt(currentLine).text;
+                currentLineAt.forEach(s => { docAtLine = docAtLine.replace(s, ''); });
+                if (docAtLine === docAtLine.replace(str, '')) {
+                    return countStringLines(str, currentLine+1, []);
+                }
+                currentLineAt.push(str);
                 return [currentLine, currentLineAt];
             };
             tokenized.forEach(token => {
-                if (typeof token === 'string') {
-                    [currentLine, currentLineAt] = countStringLines(token, currentLine);
-                } else if (token.type === 'comment' && typeof token.content === 'string') {
-                    [currentLine, currentLineAt] = countStringLines(token.content, currentLine);
-                } else if (typeof token.content === 'string') {
-                    const currentContent = token.content;
-                    const matches = currentContent.match(this.regexp);
-                    if (matches) matches.forEach(bracket => {
-                        if (!lines.hasOwnProperty(currentLine)) {
-                            lines[currentLine] = {};
-                        }
-                        if (!lines[currentLine].hasOwnProperty(bracket)) {
-                            lines[currentLine][bracket] = [];
-                        }
-                        lines[currentLine][bracket].push(token.type);
-                        typesFound[bracket] = true;
+                if (typeof token.content === 'string') {
+                    token.content.split('\n').forEach(currentContent => {
+                        [currentLine, currentLineAt] = countStringLines(currentContent,
+                                                            currentLine, currentLineAt);
+                        const matches = currentContent.match(this.regexp);
+                        if (matches) matches.forEach(bracket => {
+                            if (!lines.hasOwnProperty(currentLine)) {
+                                lines[currentLine] = {};
+                            }
+                            if (!lines[currentLine].hasOwnProperty(bracket)) {
+                                lines[currentLine][bracket] = [];
+                            }
+                            lines[currentLine][bracket].push(token.type);
+                            typesFound[bracket] = true;
+                        });
                     });
                 } else if (Array.isArray(token.content)){
                     [lines,
@@ -313,13 +318,17 @@ export class Runner {
         }
         if (!tokenized) return emptyAns;
 
-        const ansGetContent = getContent({}, {}, tokenized, 0, 0);
-        console.log(ansGetContent);
-        return {
-            'knownLanguage': language,
-            'parsedDocBrackets': ansGetContent[0],
-            'typesFound': Object.keys(ansGetContent[1])
-        };
+        try {
+            const ansGetContent = getContent({}, {}, tokenized, 0, []);
+            return {
+                'knownLanguage': language,
+                'parsedDocBrackets': ansGetContent[0],
+                'typesFound': Object.keys(ansGetContent[1])
+            };
+        } catch (err) {
+            console.log(err + ' Parsing without Prism.');
+            return emptyAns;
+        }
     }
 
 }
