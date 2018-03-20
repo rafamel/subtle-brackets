@@ -3,7 +3,7 @@
   "displayName": "Subtle Match Brackets",
   "description": "Underlined matching brackets and more",
   "version": "2.1.0",
-  "publisher": "rafamel",
+  "publisher": "tuhlmann",
   "author": {
     "name": "rafamel"
   },
@@ -19,10 +19,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/rafamel/subtle-brackets"
+    "url": "https://github.com/tuhlmann/subtle-brackets"
   },
   "bugs": {
-    "url": "https://github.com/rafamel/subtle-brackets/issues"
+    "url": "https://github.com/tuhlmann/subtle-brackets/issues"
   },
   "license": "SEE LICENSE IN LICENSE",
   "engines": {
@@ -61,7 +61,10 @@
           "default": {
             "global": {
               "borderWidth": "1px",
-              "borderStyle": "none none solid none"
+              "borderStyle": "none none solid none",
+              "borderColor": "#D4D4D4",
+              "light": { "borderColor": "#333333"
+              }
             }
           },
           "description": "Custom styles for matching brackets"
