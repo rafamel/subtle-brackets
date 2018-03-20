@@ -41,7 +41,9 @@ export class Runner {
         if (!styles.hasOwnProperty('global')) {
             styles.global = {
               'borderWidth': '1px',
-              'borderStyle': 'none none solid none'
+              'borderStyle': 'none none solid none',
+              'borderColor': '#D4D4D4',
+              'light': { 'borderColor': '#333333' }
             };
         }
         for (const styleFor of Object.keys(styles)) {
