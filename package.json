@@ -85,6 +85,7 @@
     "tslint-language-service": "^0.9.6"
   },
   "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
     "prism-languages": "^0.3.3",
     "prismjs": "^1.6.0",
     "timeout-as-promise": "^1.0.0"

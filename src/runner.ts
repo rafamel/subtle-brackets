@@ -2,6 +2,7 @@
 import * as vscode from 'vscode'; // VS Code extensibility API
 import * as prism from 'prismjs';
 import * as prismLanguages from 'prism-languages';
+import * as deep from 'lodash.clonedeep';
 
 interface IKeepParsingObj {
     open: number;
@@ -37,7 +38,7 @@ export class Runner {
         this.parse = settings.parse;
 
         // Decorations
-        const styles = settings.styles;
+        const styles = deep(settings.styles);
         if (!styles.hasOwnProperty('global')) {
             styles.global = {
               'borderWidth': '1px',
