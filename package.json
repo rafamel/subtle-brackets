@@ -1,93 +1,93 @@
 {
-  "name": "subtle-brackets",
-  "displayName": "Subtle Match Brackets",
-  "description": "Underlined matching brackets and more",
-  "version": "2.1.0",
-  "publisher": "rafamel",
-  "author": {
-    "name": "rafamel"
-  },
-  "icon": "icon_256.png",
-  "categories": [
-    "Other"
-  ],
-  "keywords": [
-    "bracket",
-    "brackets",
-    "match",
-    "matching"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/rafamel/subtle-brackets"
-  },
-  "bugs": {
-    "url": "https://github.com/rafamel/subtle-brackets/issues"
-  },
-  "license": "SEE LICENSE IN LICENSE",
-  "engines": {
-    "vscode": "^1.12.0"
-  },
-  "activationEvents": [
-    "*"
-  ],
-  "main": "./out/src/extension",
-  "contributes": {
-    "configuration": {
-      "type": "object",
-      "title": "Suble Brackets",
-      "properties": {
-        "subtleBrackets.parse": {
-          "type": "boolean",
-          "default": true,
-          "description": "If true, the document will be parsed so brackets within strings don't trigger the decoration"
-        },
-        "subtleBrackets.disableNative": {
-          "type": "boolean",
-          "default": true,
-          "description": "Permanently disable the native matchBrackets"
-        },
-        "subtleBrackets.bracketPairs": {
-          "type": "array",
-          "default": [
-            "{}",
-            "[]",
-            "()"
-          ],
-          "description": "Pairs of matching brackets"
-        },
-        "subtleBrackets.styles": {
-          "type": "object",
-          "default": {
-            "global": {
-              "borderWidth": "1px",
-              "borderStyle": "none none solid none"
+    "name": "subtle-brackets",
+    "displayName": "Subtle Match Brackets",
+    "description": "Underlined matching brackets and more",
+    "version": "2.1.1",
+    "publisher": "rafamel",
+    "author": {
+        "name": "rafamel"
+    },
+    "icon": "icon_256.png",
+    "categories": [
+        "Other"
+    ],
+    "keywords": [
+        "bracket",
+        "brackets",
+        "match",
+        "matching"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rafamel/subtle-brackets"
+    },
+    "bugs": {
+        "url": "https://github.com/rafamel/subtle-brackets/issues"
+    },
+    "license": "SEE LICENSE IN LICENSE",
+    "engines": {
+        "vscode": "^1.12.0"
+    },
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "Suble Brackets",
+            "properties": {
+                "subtleBrackets.parse": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "If true, the document will be parsed so brackets within strings don't trigger the decoration"
+                },
+                "subtleBrackets.disableNative": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Permanently disable the native matchBrackets"
+                },
+                "subtleBrackets.bracketPairs": {
+                    "type": "array",
+                    "default": [
+                        "{}",
+                        "[]",
+                        "()"
+                    ],
+                    "description": "Pairs of matching brackets"
+                },
+                "subtleBrackets.styles": {
+                    "type": "object",
+                    "default": {
+                        "global": {
+                            "borderWidth": "1px",
+                            "borderStyle": "none none solid none"
+                        }
+                    },
+                    "description": "Custom styles for matching brackets"
+                }
             }
-          },
-          "description": "Custom styles for matching brackets"
         }
-      }
+    },
+    "scripts": {
+        "vscode:prepublish": "tsc -p ./",
+        "compile": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.3.4",
+        "vscode": "^1.0.0",
+        "mocha": "^2.3.3",
+        "@types/node": "^6.0.78",
+        "@types/mocha": "^2.2.32",
+        "tslint": "^5.4.3",
+        "tslint-language-service": "^0.9.6"
+    },
+    "dependencies": {
+        "lodash.clonedeep": "^4.5.0",
+        "prism-languages": "^0.3.3",
+        "prismjs": "^1.6.0",
+        "timeout-as-promise": "^1.0.0"
     }
-  },
-  "scripts": {
-    "vscode:prepublish": "tsc -p ./",
-    "compile": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "node ./node_modules/vscode/bin/test"
-  },
-  "devDependencies": {
-    "typescript": "^2.3.4",
-    "vscode": "^1.0.0",
-    "mocha": "^2.3.3",
-    "@types/node": "^6.0.78",
-    "@types/mocha": "^2.2.32",
-    "tslint": "^5.4.3",
-    "tslint-language-service": "^0.9.6"
-  },
-  "dependencies": {
-    "lodash.clonedeep": "^4.5.0",
-    "prism-languages": "^0.3.3",
-    "prismjs": "^1.6.0",
-    "timeout-as-promise": "^1.0.0"
-  }
 }
