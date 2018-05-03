@@ -4,8 +4,18 @@ out
 
 # Node, Frameworks, Editors #
 #############################
+build
+dist
+_test.js
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+coverage
 node_modules
 npm-debug.log
+.cache
 
 # Compiled source #
 ###################
