@@ -1,22 +1,35 @@
 'use strict';
 import * as vscode from 'vscode';
-import engine from './engine';
+import Engine from './Engine';
 
 class Controller {
   private disposable: vscode.Disposable;
+  private engine: Engine;
 
   constructor() {
-    engine.start();
+    this.engine = new Engine();
+    this.engine.run();
 
     // Subscribe to selection change and editor activation events
     const subscriptions: vscode.Disposable[] = [];
     vscode.window.onDidChangeTextEditorSelection(
-      engine.start,
+      this.engine.run,
       this,
       subscriptions
     );
     vscode.window.onDidChangeActiveTextEditor(
-      engine.start,
+      (/* event */) => {
+        this.engine.reset();
+        this.engine.run();
+      },
+      this,
+      subscriptions
+    );
+    vscode.workspace.onDidChangeTextDocument(
+      (event) => {
+        this.engine.reset();
+        this.engine.run();
+      },
       this,
       subscriptions
     );
@@ -25,7 +38,7 @@ class Controller {
     this.disposable = vscode.Disposable.from(...subscriptions);
   }
   public dispose() {
-    engine.clear();
+    this.engine.reset();
     this.disposable.dispose();
   }
 }

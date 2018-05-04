@@ -23,18 +23,11 @@ export interface IMatch {
   index: number;
 }
 
-export interface IAdjacentMatches {
-  adjacent: IMatch;
-  forwards: boolean;
-  matches: IMatch[];
-}
-
-export interface IPosition {
-  str: string;
-  index: number;
+export interface ILineMatch extends IMatch {
   line: number;
 }
-export interface IPositionMatch {
-  start: IPosition;
-  end?: IPosition;
+
+export interface IPairMatch {
+  start: ILineMatch;
+  end?: ILineMatch;
 }
