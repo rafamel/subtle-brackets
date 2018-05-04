@@ -31,7 +31,7 @@
     "activationEvents": [
         "*"
     ],
-    "main": "./out/src/extension",
+    "main": "./out/extension",
     "contributes": {
         "configuration": {
             "type": "object",
@@ -72,11 +72,11 @@
     "scripts": {
         "precommit": "MSG='Committing in:' npm run validate",
         "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
+        "build": "tsc -p ./",
         "watch": "tsc -watch -p ./",
         "lint": "tslint ./src/**/*",
         "fix": "prettier --write \"**/*.{js,ts,scss,md}\"",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test",
+        "test": "npm run build && node ./node_modules/vscode/bin/test",
         "validate": "run-s fix lint && npm run outdated",
         "update": "npm update --save/save-dev && npm outdated",
         "outdated": "if !(npm outdated) && [ -n \"$MSG\" ]; then printf \"\n\" && for i in `seq 0 8`; do sleep 1 && printf '\r%s %2d' \"$MSG\" \"$((8-i))\"; done; fi;",
@@ -98,7 +98,6 @@
     "dependencies": {
         "lodash.clonedeep": "^4.5.0",
         "prism-languages": "^0.3.3",
-        "prismjs": "^1.6.0",
-        "timeout-as-promise": "^1.0.0"
+        "prismjs": "^1.6.0"
     }
 }

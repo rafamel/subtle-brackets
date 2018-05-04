@@ -1,6 +1,7 @@
 # Project Specific #
 ####################
 out
+.vscode-test
 
 # Node, Frameworks, Editors #
 #############################
