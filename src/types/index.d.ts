@@ -1,3 +1,5 @@
+import * as vscode from 'vscode';
+
 export interface IBracket {
   opposite: string;
   pair: string;
@@ -11,8 +13,8 @@ export interface IBrackets {
 export interface IOptions {
   brackets: IBrackets;
   regexp: RegExp;
-  styles: {
-    [key: string]: object;
+  decorations: {
+    [key: string]: vscode.TextEditorDecorationType;
   };
 }
 
@@ -27,15 +29,12 @@ export interface IAdjacentMatches {
   matches: IMatch[];
 }
 
-export interface ITraversed {
-  start: {
-    str: string;
-    index: number;
-    line: number;
-  };
-  end?: {
-    str: string;
-    index: number;
-    line: number;
-  };
+export interface IPosition {
+  str: string;
+  index: number;
+  line: number;
+}
+export interface IPositionMatch {
+  start: IPosition;
+  end?: IPosition;
 }

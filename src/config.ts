@@ -2,5 +2,5 @@
 
 export default {
   pairSeparation: '...',
-  traverseTimeout: 5000
+  traverseTimeout: 3000
 };

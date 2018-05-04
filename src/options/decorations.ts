@@ -13,19 +13,23 @@ export default function parseStyles(settings: vscode.WorkspaceConfiguration) {
       borderStyle: 'none none solid none'
     };
   }
-  Object.keys(styles).forEach((styleFor) => {
+  return Object.keys(styles).reduce((acc, styleFor) => {
     // Discard any styles for pairs not declared in settings.bracketParis
     if (styleFor !== 'global' && bracketPairs.indexOf(styleFor) === -1) {
-      return warn(
+      warn(
         `Styled pair "${styleFor}" doesn't exist in the "bracketPairs" definition`
       );
+      return acc;
     }
     // Add default borderColor if the style lacks it
     if (!styles[styleFor].hasOwnProperty('borderColor')) {
       styles[styleFor].borderColor = '#D4D4D4';
       styles[styleFor].light = { borderColor: '#333333' };
     }
-  });
 
-  return styles;
+    acc[styleFor] = vscode.window.createTextEditorDecorationType(
+      styles[styleFor]
+    );
+    return acc;
+  }, {});
 }
