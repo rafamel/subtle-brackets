@@ -27,7 +27,7 @@ function setOptions(settings: vscode.WorkspaceConfiguration): IOptions {
   const escape = (s) => s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
   const regexp = new RegExp('(' + sorted.map(escape).join('|') + ')', 'g');
 
-  options = { decorations, brackets, regexp };
+  options = { decorations, brackets, regexp, parse: settings.parse };
   return options;
 }
 

@@ -11,6 +11,7 @@ export interface IBrackets {
 }
 
 export interface IOptions {
+  parse: boolean;
   brackets: IBrackets;
   regexp: RegExp;
   decorations: {
@@ -18,23 +19,21 @@ export interface IOptions {
   };
 }
 
+export interface IPrismMatch {
+  str: string;
+  type: string;
+}
+
 export interface IMatch {
   str: string;
   index: number;
 }
 
-export interface IAdjacentMatches {
-  adjacent: IMatch;
-  forwards: boolean;
-  matches: IMatch[];
-}
-
-export interface IPosition {
-  str: string;
-  index: number;
+export interface ILineMatch extends IMatch {
   line: number;
 }
-export interface IPositionMatch {
-  start: IPosition;
-  end?: IPosition;
+
+export interface IPairMatch {
+  start: ILineMatch;
+  end?: ILineMatch;
 }
