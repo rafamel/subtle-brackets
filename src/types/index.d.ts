@@ -11,11 +11,17 @@ export interface IBrackets {
 }
 
 export interface IOptions {
+  parse: boolean;
   brackets: IBrackets;
   regexp: RegExp;
   decorations: {
     [key: string]: vscode.TextEditorDecorationType;
   };
+}
+
+export interface IPrismMatch {
+  str: string;
+  type: string;
 }
 
 export interface IMatch {

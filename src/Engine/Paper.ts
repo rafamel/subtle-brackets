@@ -2,12 +2,15 @@
 import * as vscode from 'vscode';
 import { IMatch, ILineMatch, IPairMatch } from '../types';
 import options from '../options';
-import matchAll from './utils/match-all';
+import matchAll from './match-all';
+import PrismParser from './PrismParser';
 
 export default class Paper {
+  public language: string;
   private editor?: vscode.TextEditor;
   private doc?: vscode.TextDocument;
   private decoration?: vscode.TextEditorDecorationType;
+  private parser: PrismParser;
   private matches: { [key: number]: IMatch[] };
   private regexp: RegExp;
   constructor() {
@@ -15,21 +18,25 @@ export default class Paper {
     this.regexp = options.get().regexp;
     this.editor = vscode.window.activeTextEditor;
     if (this.editor) this.doc = this.editor.document;
+    this.language = this.getLanguage();
+    this.parser = this.getParser();
+  }
+  public get text(): string {
+    return (this.doc && this.doc.getText()) || '';
   }
   public get lines(): number {
     return (this.doc && this.doc.lineCount) || 0;
   }
   public getLine(n): string {
-    return this.doc ? this.doc.lineAt(n).text : '';
+    return (this.doc && this.doc.lineAt(n).text) || '';
   }
   public getMatches(
     line: number,
     startAt?: number | false,
     endAt?: number | false
   ): IMatch[] {
-    if (!this.matches[line]) {
-      this.matches[line] = matchAll(this.getLine(line), this.regexp);
-    }
+    this.resetOnLanguage();
+    if (!this.matches[line]) this.matches[line] = this._getMatches(line);
 
     if (!startAt && !endAt && endAt !== 0) return this.matches[line].concat();
     return this.matches[line].filter((match) => {
@@ -95,5 +102,35 @@ export default class Paper {
       this.editor.setDecorations(this.decoration, []);
       this.decoration = undefined;
     }
+  }
+  private getLanguage(): string {
+    return (this.doc && this.doc.languageId) || '';
+  }
+  private getParser() {
+    return new PrismParser(this.text, this.language, this.lines);
+  }
+  private resetOnLanguage(): void {
+    // If doc language has changed, parse the document again
+    // and clear the matches
+    const newLanguage = this.getLanguage();
+    if (this.language !== newLanguage) {
+      this.language = newLanguage;
+      this.parser = this.getParser();
+      this.matches = [];
+    }
+  }
+  private _getMatches(line: number) {
+    const matches = matchAll(this.getLine(line), this.regexp);
+    if (!this.parser.matches.length) return matches;
+
+    const parsedLine = this.parser.matches[line];
+    return matches.filter((match, i) => {
+      // If not found on the parsed doc, don't filter
+      if (!parsedLine[i] || parsedLine[i].str !== match.str) return true;
+      // If type is not punctuation, then filter
+      if (this.parser.strategy.indexOf(parsedLine[i].type) === -1) return false;
+      // Don't filter in any other case
+      return true;
+    });
   }
 }

@@ -26,7 +26,7 @@ class Controller {
       subscriptions
     );
     vscode.workspace.onDidChangeTextDocument(
-      (event) => {
+      (/* event */) => {
         this.engine.reset();
         this.engine.run();
       },
