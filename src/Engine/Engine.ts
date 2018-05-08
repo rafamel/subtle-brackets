@@ -2,7 +2,7 @@
 import Paper from './Paper';
 import options from '../options';
 import config from '../config';
-import { IBracket, IMatch, ILineMatch, IPairMatch } from '../types';
+import { IMatch, ILineMatch, IPairMatch } from '../types';
 
 class Engine {
   private paper: Paper;
@@ -15,6 +15,7 @@ class Engine {
 
     // Stop if there's no adjacent bracket
     const adjacent = this.paper.getAdjacent();
+
     if (!adjacent) return;
 
     // Decorate starting and ending bracket positions.
@@ -46,6 +47,7 @@ class Engine {
     const state: IPairMatch = {
       start: entryMatch
     };
+
     let line = entryMatch.line;
     let nextMatches: IMatch[] = forwards
       ? this.paper.getMatches(line, entryMatch.index + entryMatch.str.length)
@@ -56,8 +58,14 @@ class Engine {
       // Each line
       lineFor: for (const match of nextMatches) {
         // Each match
-        const bracket: IBracket = brackets[match.str];
-        if (!bracket) continue lineFor;
+        const bracket = brackets[match.str];
+        if (
+          !bracket ||
+          (bracket.opposite !== entryMatch.str &&
+            bracket.str !== entryMatch.str)
+        ) {
+          continue lineFor;
+        }
 
         if (bracket.type === OPEN) stack.push(match);
         else if (
