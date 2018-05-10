@@ -37,34 +37,41 @@
             "type": "object",
             "title": "Subtle Brackets",
             "properties": {
-                "subtleBrackets.parse": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "If true, the document will be parsed so brackets within strings don't trigger the decoration"
-                },
                 "subtleBrackets.disableNative": {
                     "type": "boolean",
                     "default": true,
                     "description": "Permanently disable the native matchBrackets"
                 },
-                "subtleBrackets.bracketPairs": {
-                    "type": "array",
-                    "default": [
-                        "{}",
-                        "[]",
-                        "()"
-                    ],
-                    "description": "Pairs of matching brackets"
+                "subtleBrackets.parse": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "If true, the document will be parsed so brackets within strings don't trigger the decoration"
                 },
-                "subtleBrackets.styles": {
+                "subtleBrackets.style": {
                     "type": "object",
                     "default": {
-                        "global": {
-                            "borderWidth": "1px",
-                            "borderStyle": "none none solid none"
-                        }
+                        "borderWidth": "1px",
+                        "borderStyle": "none none solid none"
                     },
-                    "description": "Custom styles for matching brackets"
+                    "description": "Default style for matching brackets"
+                },
+                "subtleBrackets.pairs": {
+                    "type": "array",
+                    "default": [
+                        {
+                            "open": "(",
+                            "close": ")"
+                        },
+                        {
+                            "open": "[",
+                            "close": "]"
+                        },
+                        {
+                            "open": "{",
+                            "close": "}"
+                        }
+                    ],
+                    "description": "Pairs of matching brackets"
                 }
             }
         }
@@ -85,6 +92,7 @@
     "devDependencies": {
         "@types/mocha": "^5.2.0",
         "@types/node": "^10.0.4",
+        "@types/uuid": "^3.4.3",
         "husky": "^0.14.3",
         "mocha": "^5.1.1",
         "npm-run-all": "^4.1.2",
@@ -97,6 +105,7 @@
     },
     "dependencies": {
         "lodash.clonedeep": "^4.5.0",
-        "prismjs": "^1.14.0"
+        "prismjs": "^1.14.0",
+        "uuid": "^3.2.1"
     }
 }

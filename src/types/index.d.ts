@@ -1,22 +1,25 @@
 import * as vscode from 'vscode';
+import Bracket from '../options/Bracket';
 
-export interface IBracket {
-  opposite: string;
-  pair: string;
-  type: 'open' | 'close';
+export interface IPair {
+  open: string;
+  close: string;
+  parse?: boolean;
+  style?: object;
+}
+
+export interface IPairs {
+  [key: string]: IPair;
 }
 
 export interface IBrackets {
-  [key: string]: IBracket;
+  [key: string]: Bracket;
 }
 
 export interface IOptions {
-  parse: boolean;
   brackets: IBrackets;
   regexp: RegExp;
-  decorations: {
-    [key: string]: vscode.TextEditorDecorationType;
-  };
+  parse: boolean;
 }
 
 export interface IPrismMatch {

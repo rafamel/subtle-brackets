@@ -12,10 +12,8 @@ export default class Paper {
   private decoration?: vscode.TextEditorDecorationType;
   private parser: PrismParser;
   private matches: { [key: number]: IMatch[] };
-  private regexp: RegExp;
   constructor() {
     this.matches = [];
-    this.regexp = options.get().regexp;
     this.editor = vscode.window.activeTextEditor;
     if (this.editor) this.doc = this.editor.document;
     this.language = this.getLanguage();
@@ -76,9 +74,8 @@ export default class Paper {
     if (!pos.end || !this.editor) return;
 
     // Set decoration
-    const { brackets, decorations } = options.get();
-    this.decoration =
-      decorations[brackets[pos.start.str].pair] || decorations.global;
+    const { brackets } = options.get();
+    this.decoration = brackets[pos.start.str].decoration;
 
     // Set ranges
     const ranges = {
@@ -120,13 +117,17 @@ export default class Paper {
     }
   }
   private _getMatches(line: number) {
-    const matches = matchAll(this.getLine(line), this.regexp);
+    const matches = matchAll(this.getLine(line), options.get().regexp);
     if (!this.parser.matches.length) return matches;
 
+    const { brackets } = options.get();
     const parsedLine = this.parser.matches[line];
     return matches.filter((match, i) => {
-      // If not found on the parsed doc, don't filter
+      // If it not should not be parsed, don't filter
+      if (!brackets[match.str].parse) return true;
+      // If it's not found on the parsed doc, don't filter
       if (!parsedLine[i] || parsedLine[i].str !== match.str) return true;
+
       // If type is not punctuation, then filter
       if (this.parser.strategy.indexOf(parsedLine[i].type) === -1) return false;
       // Don't filter in any other case
