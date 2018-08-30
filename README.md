@@ -12,9 +12,9 @@ _Subtle Brackets_ allows custom styling of matching brackets as VSCode currently
 
 ![After](https://raw.githubusercontent.com/rafamel/subtle-brackets/master/images/example.png)
 
-You can also customize the style applied to matching brackets:
+You can also customize the style applied to matching brackets.
 
-![Settings](https://raw.githubusercontent.com/rafamel/subtle-brackets/master/images/rundown.gif)
+<!-- ![Settings](https://raw.githubusercontent.com/rafamel/subtle-brackets/master/images/rundown.gif) -->
 
 ## Extension Settings
 

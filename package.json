@@ -77,35 +77,39 @@
         }
     },
     "scripts": {
-        "precommit": "MSG='Committing in:' npm run validate",
-        "vscode:prepublish": "npm run compile",
-        "build": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "lint": "tslint ./src/**/*",
-        "fix": "prettier --write \"**/*.{js,ts,scss,md}\"",
-        "test": "npm run build && node ./node_modules/vscode/bin/test",
-        "validate": "run-s fix lint && npm run outdated",
-        "update": "npm update --save/save-dev && npm outdated",
-        "outdated": "if !(npm outdated) && [ -n \"$MSG\" ]; then printf \"\n\" && for i in `seq 0 8`; do sleep 1 && printf '\r%s %2d' \"$MSG\" \"$((8-i))\"; done; fi;",
+        "precommit": "cross-env MSG=\"Committing in:\" nps validate",
+        "vscode:prepublish": "nps build",
+        "build": "nps build",
+        "watch": "nps watch",
+        "fix": "nps fix",
+        "lint": "nps lint",
+        "lint:md": "nps lint.md",
+        "test": "nps test",
+        "validate": "nps validate",
+        "update": "nps update",
+        "clean": "nps clean",
         "postinstall": "node ./node_modules/vscode/bin/install"
     },
     "devDependencies": {
-        "@types/mocha": "^5.2.0",
-        "@types/node": "^10.0.4",
-        "@types/uuid": "^3.4.3",
+        "@types/mocha": "^5.2.5",
+        "@types/node": "^10.9.3",
+        "@types/uuid": "^3.4.4",
+        "cross-env": "^5.2.0",
         "husky": "^0.14.3",
-        "mocha": "^5.1.1",
-        "npm-run-all": "^4.1.2",
-        "prettier": "^1.12.1",
-        "tslint": "^5.8.0",
-        "tslint-config-prettier": "^1.12.0",
+        "markdownlint-cli": "^0.13.0",
+        "mocha": "^5.2.0",
+        "nps": "^5.9.3",
+        "prettier": "^1.14.2",
+        "shx": "^0.3.2",
+        "tslint": "^5.11.0",
+        "tslint-config-prettier": "^1.15.0",
         "tslint-language-service": "^0.9.6",
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6"
+        "typescript": "^2.9.2",
+        "vscode": "^1.1.21"
     },
     "dependencies": {
         "lodash.clonedeep": "^4.5.0",
-        "prismjs": "^1.14.0",
-        "uuid": "^3.2.1"
+        "prismjs": "^1.15.0",
+        "uuid": "^3.3.2"
     }
 }
