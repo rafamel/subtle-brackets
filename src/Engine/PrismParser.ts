@@ -94,40 +94,50 @@ export default class PrismParser {
     perLine(tokenized);
     return { parsed: lines, matches };
   }
-  private getLanguageId(language: string): string {
-    // @ https://github.com/CoenraadS/BracketPair/blob/master/src/documentDecorationManager.ts
-    // VSCode language ids need to be mapped for Prism http://prismjs.com/#languages-list
-    switch (language) {
-      case 'apex':
-        return 'java';
-      case 'html':
-        return 'markup';
-      case 'javascriptreact':
-        return 'jsx';
-      case 'json5':
-        return 'javascript';
-      case 'jsonc':
-        return 'javascript';
-      case 'mathml':
-        return 'markup';
-      case 'nunjucks':
-        return 'twig';
-      case 'razor':
-        return 'markup';
-      case 'svg':
-        return 'markup';
-      case 'systemverilog':
-        return 'verilog';
-      case 'typescriptreact':
-        return 'tsx';
-      case 'vb':
-        return 'vbnet';
-      case 'vue':
-        return 'markup';
-      case 'xml':
-        return 'markup';
-      default:
-        return language;
-    }
+  private getLanguageId(languageID: string): string {
+    return ((): string[] => {
+      // @ https://github.com/CoenraadS/BracketPair/blob/master/src/documentDecorationManager.ts
+      // VSCode language ids need to be mapped for Prism http://prismjs.com/#languages-list
+      switch (languageID) {
+        case 'ahk':
+          return ['autohotkey'];
+        case 'bat':
+          return ['batch'];
+        case 'apex':
+          return ['java'];
+        case 'gradle':
+          return ['groovy'];
+        case 'html':
+          return ['markup', 'javascript'];
+        case 'javascriptreact':
+          return ['jsx'];
+        case 'json5':
+          return ['javascript'];
+        case 'jsonc':
+          return ['javascript'];
+        case 'mathml':
+          return ['markup'];
+        case 'nunjucks':
+          return ['twig'];
+        case 'razor':
+          return ['markup', 'javascript', 'csharp', 'aspnet'];
+        case 'scad':
+          return ['swift'];
+        case 'svg':
+          return ['markup'];
+        case 'systemverilog':
+          return ['verilog'];
+        case 'typescriptreact':
+          return ['tsx'];
+        case 'vb':
+          return ['vbnet'];
+        case 'vue':
+          return ['markup', 'javascript'];
+        case 'xml':
+          return ['markup'];
+        default:
+          return [languageID];
+      }
+    })()[0];
   }
 }
