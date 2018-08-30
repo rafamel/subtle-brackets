@@ -18,15 +18,20 @@ function setDecorations(settings: vscode.WorkspaceConfiguration) {
 
   // Build decorations
   decorations = Object.keys(styles).reduce((acc, styleFor) => {
+    const style = styles[styleFor];
     // Add default borderColor if the style lacks it
-    if (!styles[styleFor].hasOwnProperty('borderColor')) {
-      styles[styleFor].borderColor = '#D4D4D4';
-      styles[styleFor].light = { borderColor: '#333333' };
+    if (!style.hasOwnProperty('borderColor')) {
+      style.borderColor = '#D4D4D4';
+      style.light = { borderColor: '#333333' };
+    }
+    if (!style.hasOwnProperty('borderStyle')) {
+      style.borderStyle = 'none none solid none';
+    }
+    if (!style.hasOwnProperty('borderWidth')) {
+      style.borderWidth = '1px';
     }
 
-    acc[styleFor] = vscode.window.createTextEditorDecorationType(
-      styles[styleFor]
-    );
+    acc[styleFor] = vscode.window.createTextEditorDecorationType(style);
     return acc;
   }, {});
 
