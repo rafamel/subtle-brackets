@@ -3,13 +3,13 @@ const registerSx = (sx, _ = (global.SX = {})) =>
 const sx = (name) => `node -r ./package-scripts.js -e "global.SX.${name}()"`;
 const scripts = (x) => ({ scripts: x });
 const exit0 = (x) => `${x} || shx echo `;
-// const series = (x) => `(${x.join(') && (')})`;
+const series = (x) => `(${x.join(') && (')})`;
 // const intrim = (x) => x.replace(/\n/g, ' ').replace(/ {2,}/g, ' ');
 
 process.env.LOG_LEVEL = 'disable';
 module.exports = scripts({
-  build: 'tsc -p ./',
-  watch: 'tsc -watch -p ./',
+  build: series([exit0('shx rm -r out'), `tsc -p ./`]),
+  watch: series([exit0('shx rm -r out'), `tsc -watch -p ./`]),
   fix: `prettier --write "./**/*.{js,jsx,ts,scss}"`,
   lint: {
     default: 'tslint ./src/**/*',
