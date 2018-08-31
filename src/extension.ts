@@ -15,12 +15,11 @@ function disableNative(settings) {
     .update('editor.matchBrackets', false, true);
 }
 
-let controller;
 export function activate(context: vscode.ExtensionContext) {
   let settings = getSettings();
   disableNative(settings.settings);
   options.set(settings.settings);
-  controller = new Controller();
+  const controller = new Controller();
 
   // Register Save Event
   const saveEv = vscode.workspace.onDidChangeConfiguration(() => {
@@ -32,6 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
     settings = current;
     disableNative(settings.settings);
     options.set(settings.settings);
+    controller.reset();
   });
 
   // Add to a list of disposables which are disposed when this extension is deactivated.

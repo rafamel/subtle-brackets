@@ -7,6 +7,16 @@ import options from '../options';
 import config from '../config';
 import logger from '../utils/logger';
 
+// Initialize Prism languages
+let languagesLoad = false;
+function loadLanguages() {
+  if (languagesLoad) return;
+
+  logger.info('prismjs loadLanguages()');
+  languagesLoad = true;
+  loadLanguages();
+}
+
 export default class PrismParser {
   public parsed: IPrismMatch[][];
   public matches: IPrismMatch[][];
@@ -17,20 +27,28 @@ export default class PrismParser {
     powershell: ['namespace', 'none']
   };
   constructor(private text: string, language: string, lines: number) {
+    logger.debug('begin: new PrismParser()');
+    const endLogger = () => logger.debug('end: new PrismParser()');
+
     this.parsed = [];
     this.matches = [];
     this.language = this.getLanguageId(language);
-    if (lines > config.maxPrismLines || !options.get().parse) return;
+    if (lines > config.maxPrismLines || !options.get().parse) {
+      return endLogger();
+    }
 
-    // Initialize Prism languages
-    loadLanguages();
     // Parse
+    loadLanguages();
+    logger.debug('run: PrismParser.tokenize()');
     const tokenized = this.tokenize();
-    if (!tokenized) return;
+    if (!tokenized) return endLogger();
 
+    logger.debug('run: PrismParser.parse()');
     const parsed = this.parse(tokenized);
     this.parsed = parsed.parsed;
     this.matches = parsed.matches;
+
+    return endLogger();
   }
   public get strategy(): string[] {
     return this.strategies.hasOwnProperty(this.language)
