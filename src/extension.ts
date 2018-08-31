@@ -1,8 +1,7 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import Controller from './Controller';
-import ResetableTimeout from './utils/ResetableTimeout';
 import options from './options';
+import logger from './utils/logger';
 
 function getSettings() {
   const settings = vscode.workspace.getConfiguration('subtleBrackets');
@@ -16,29 +15,23 @@ function disableNative(settings) {
     .update('editor.matchBrackets', false, true);
 }
 
+let controller;
 export function activate(context: vscode.ExtensionContext) {
   let settings = getSettings();
   disableNative(settings.settings);
   options.set(settings.settings);
-  const controller = new Controller();
+  controller = new Controller();
 
   // Register Save Event
-  const timeout = new ResetableTimeout();
-  const saveEv = vscode.workspace.onDidSaveTextDocument((saved) => {
-    timeout
-      .reset(2000)
-      .then(() => {
-        const fileName = path.basename(saved.fileName);
-        if (fileName !== 'settings.json') return;
+  const saveEv = vscode.workspace.onDidChangeConfiguration(() => {
+    logger.debug('Configuration/settings changed.');
+    const current = getSettings();
+    if (settings.string === current.string) return;
+    logger.debug('Subtle Brackets settings changed.');
 
-        const current = getSettings();
-        if (settings.string === current.string) return;
-
-        settings = current;
-        disableNative(settings.settings);
-        options.set(settings.settings);
-      })
-      .catch((e) => ({}));
+    settings = current;
+    disableNative(settings.settings);
+    options.set(settings.settings);
   });
 
   // Add to a list of disposables which are disposed when this extension is deactivated.
@@ -47,6 +40,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 // Method called when the extension is deactivated
 export function deactivate(context: vscode.ExtensionContext) {
+  // Dispose of subscriptions
+  context.subscriptions.forEach((disposable) => disposable.dispose());
+
+  // Reset native 'editor.matchBrackets'
   const disabledNative = vscode.workspace
     .getConfiguration()
     .get<boolean>('subtleBrackets.disableNative');
