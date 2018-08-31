@@ -5,6 +5,7 @@ import { IPrismMatch } from '../types';
 import matchAll from './match-all';
 import options from '../options';
 import config from '../config';
+import logger from '../utils/logger';
 
 export default class PrismParser {
   public parsed: IPrismMatch[][];
@@ -45,7 +46,7 @@ export default class PrismParser {
       return prism.tokenize(this.text, grammar);
     } catch (err) {
       // tslint:disable-next-line
-      console.warn(err);
+      logger.warn(err);
     }
   }
   private parse(
