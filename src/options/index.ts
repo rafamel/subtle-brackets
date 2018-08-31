@@ -1,4 +1,3 @@
-'use strict';
 import * as vscode from 'vscode';
 import { IOptions } from '../types';
 import pairs from './pairs';

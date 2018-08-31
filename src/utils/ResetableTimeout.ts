@@ -1,5 +1,3 @@
-'use strict';
-
 export default class ResetableTimeout {
   private timeout: any;
   // tslint:disable-next-line

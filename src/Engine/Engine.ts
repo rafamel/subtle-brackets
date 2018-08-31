@@ -1,4 +1,3 @@
-'use strict';
 import Paper from './Paper';
 import options from '../options';
 import config from '../config';

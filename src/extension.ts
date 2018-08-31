@@ -1,4 +1,3 @@
-'use strict';
 import * as vscode from 'vscode';
 import * as path from 'path';
 import Controller from './Controller';
@@ -21,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
   let settings = getSettings();
   disableNative(settings.settings);
   options.set(settings.settings);
-  let controller = new Controller();
+  const controller = new Controller();
 
   // Register Save Event
   const timeout = new ResetableTimeout();
@@ -39,7 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
         disableNative(settings.settings);
         options.set(settings.settings);
       })
-      .catch((e) => {});
+      .catch((e) => ({}));
   });
 
   // Add to a list of disposables which are disposed when this extension is deactivated.
@@ -48,13 +47,13 @@ export function activate(context: vscode.ExtensionContext) {
 
 // Method called when the extension is deactivated
 export function deactivate(context: vscode.ExtensionContext) {
-  const disableNative = vscode.workspace
+  const disabledNative = vscode.workspace
     .getConfiguration()
     .get<boolean>('subtleBrackets.disableNative');
   const matchBrackets = vscode.workspace
     .getConfiguration()
     .get<boolean>('editor.matchBrackets');
-  if (disableNative && !matchBrackets) {
+  if (disabledNative && !matchBrackets) {
     vscode.workspace
       .getConfiguration()
       .update('editor.matchBrackets', true, true);

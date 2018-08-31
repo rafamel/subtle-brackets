@@ -1,4 +1,3 @@
-'use strict';
 import { IBrackets } from '../types';
 import pairs from './pairs';
 import Bracket from './Bracket';

@@ -1,4 +1,3 @@
-'use strict';
 import { IMatch } from '../types';
 
 // Returns all matches for a regular expression on a string

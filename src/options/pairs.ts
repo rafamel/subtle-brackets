@@ -1,4 +1,3 @@
-'use strict';
 import * as vscode from 'vscode';
 import { v4 as uuid } from 'uuid';
 import warn from '../utils/warn';

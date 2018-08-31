@@ -1,4 +1,3 @@
-'use strict';
 import * as vscode from 'vscode';
 import { IMatch, ILineMatch, IPairMatch } from '../types';
 import options from '../options';

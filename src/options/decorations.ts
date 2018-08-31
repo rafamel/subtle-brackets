@@ -1,4 +1,3 @@
-'use strict';
 import * as vscode from 'vscode';
 import * as deep from 'lodash.clonedeep';
 import pairs from './pairs';

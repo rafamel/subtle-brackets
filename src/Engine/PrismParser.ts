@@ -1,4 +1,3 @@
-'use strict';
 import * as prism from 'prismjs';
 // import { languages } from 'prismjs/components';
 import * as loadLanguages from 'prismjs/components/index';

@@ -1,4 +1,3 @@
-'use strict';
 import * as vscode from 'vscode';
 import pairs from './pairs';
 import decorations from './decorations';
