@@ -2,6 +2,7 @@ import Paper from './Paper';
 import options from '../options';
 import config from '../config';
 import { IMatch, ILineMatch, IPairMatch } from '../types';
+import logger from '../utils/logger';
 
 class Engine {
   private paper: Paper;
@@ -9,6 +10,7 @@ class Engine {
     this.paper = new Paper();
   }
   public run = () => {
+    logger.debug('run: Engine.run()');
     // Clear the decorations
     this.paper.undecorate();
 
@@ -22,9 +24,11 @@ class Engine {
     this.paper.decorate(pairMatch);
   };
   public reset = () => {
+    logger.debug('begin: Engine.reset()');
     // Clears the decorations and will need to re-parse all matches
     this.paper.undecorate();
     this.paper = new Paper();
+    logger.debug('end: Engine.reset()');
   };
   private traverse(entryMatch: ILineMatch): IPairMatch {
     const getForwards = (bracket: string) => brackets[bracket].type === 'open';

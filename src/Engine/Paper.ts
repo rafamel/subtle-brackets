@@ -3,6 +3,7 @@ import { IMatch, ILineMatch, IPairMatch } from '../types';
 import options from '../options';
 import matchAll from './match-all';
 import PrismParser from './PrismParser';
+import logger from '../utils/logger';
 
 export default class Paper {
   public language: string;
@@ -12,11 +13,13 @@ export default class Paper {
   private parser: PrismParser;
   private matches: { [key: number]: IMatch[] };
   constructor() {
+    logger.debug('begin: new Paper()');
     this.matches = [];
     this.editor = vscode.window.activeTextEditor;
     if (this.editor) this.doc = this.editor.document;
     this.language = this.getLanguage();
     this.parser = this.getParser();
+    logger.debug('end: new Paper()');
   }
   public get text(): string {
     return (this.doc && this.doc.getText()) || '';
@@ -94,10 +97,12 @@ export default class Paper {
     this.editor.setDecorations(this.decoration, [ranges.start, ranges.end]);
   }
   public undecorate(): void {
+    logger.debug('begin: Paper.undecorate()');
     if (this.editor && this.decoration) {
       this.editor.setDecorations(this.decoration, []);
       this.decoration = undefined;
     }
+    logger.debug('end: Paper.undecorate()');
   }
   private getLanguage(): string {
     return (this.doc && this.doc.languageId) || '';
