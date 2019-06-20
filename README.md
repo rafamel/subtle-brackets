@@ -32,7 +32,7 @@ Each pair definitition **must** have the `open` and `close` keys, and **can** op
 As an example, here's how you would disable parsing for the `()` bracket pair, and set a red underline for `{}`.
 
 ```javascript
-"subtleBarckets.pairs" : [
+"subtleBrackets.pairs" : [
   {
     "open": "(",
     "close": ")",
@@ -66,7 +66,7 @@ As an example, here's how you would set a 2px blue underline default style:
 You can also target a specific bracket pair by setting a `style` key within its definition. As an example, here's how we'd assign a white font over red a background to the `"[]"` pair.
 
 ```javascript
-"subtleBarckets.pairs" : [
+"subtleBrackets.pairs" : [
   {
     "open": "(",
     "close": ")"
