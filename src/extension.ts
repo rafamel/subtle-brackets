@@ -12,7 +12,7 @@ function disableNative(settings) {
   if (!settings.disableNative) return;
   vscode.workspace
     .getConfiguration()
-    .update('editor.matchBrackets', false, true);
+    .update('editor.matchBrackets', 'never', true);
 }
 
 export function activate(context: vscode.ExtensionContext) {
